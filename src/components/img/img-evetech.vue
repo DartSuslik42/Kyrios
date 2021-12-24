@@ -22,7 +22,7 @@ export default {
       required : true,
     },
     id : {
-      required : true,
+      default : 1
     },
     variation : {
     },
@@ -56,7 +56,6 @@ export default {
           this.dataVariation = this.variation
       }
       this.dataSrc = "https://images.evetech.net/" + this.category + "/" + this.id + "/" + this.dataVariation + "?size=" + this.size
-      console.debug(this.dataSrc)
     },
   },
   watch : {

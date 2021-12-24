@@ -13,9 +13,7 @@
           </td>
           <td v-if="selectedFaction" class="corps">
             <npc-corporations-list
-                :corps="this.corps[this.factions.findIndex((element)=>{
-                if(element.id === this.selectedFaction.id){return true}
-                })].Corporations"
+                :corps="corporations(selectedFaction.id)"
                 :selected="value"
                 @selected="corpSelected"
             >
@@ -31,6 +29,7 @@ import NpcCorporationsList from "./npcCorporationsList.vue";
 import NpcFactionList from "./npcFactionList.vue";
 import MyDialog from "components/customComponents/myDialog.vue";
 import NpcCorporationSelected from "./npcCorporation-selected.vue";
+import {mapGetters} from "vuex"
 export default {
   name: "select-npcCorporation",
   components: {NpcCorporationSelected, MyDialog, NpcFactionList, NpcCorporationsList},
@@ -47,23 +46,23 @@ export default {
       this.selectedFaction = fact;
     },
     corpSelected(corp){
-      // this.selectedCorp = corp
+      this.selectedCorp = corp
       this.showTable = false
       this.$emit("input", corp)
     },
+  },
+  computed:{
+    ...mapGetters({
+      factions : "npcCorporationsModule/getFactions",
+      corporations : "npcCorporationsModule/getCorporations",
+    })
   },
   data(){
     return {
       selectedCorp : null,
       selectedFaction : null,
-      factions : [],
       showTable : false,
     }
-  },
-  created() {
-    this.corps.forEach((p) => {
-      this.factions.push(p.Faction)
-    })
   },
 }
 </script>
