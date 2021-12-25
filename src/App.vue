@@ -43,7 +43,7 @@ export default {
   background-color: #030303;
 }
 .selector{
-  width: 100%;
-  height: 15em;
+  width: 0;
+  height: 0;
 }
 </style>

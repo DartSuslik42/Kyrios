@@ -1,5 +1,5 @@
 <template>
-  <img :src="dataSrc" :alt="'NotFound'">
+  <img :src="dataSrc" @error='error' :alt="''">
 </template>
 
 <script>
@@ -57,6 +57,10 @@ export default {
       }
       this.dataSrc = "https://images.evetech.net/" + this.category + "/" + this.id + "/" + this.dataVariation + "?size=" + this.size
     },
+    error(){
+      this.dataSrc = "https://images.evetech.net/" + this.category + "/" + 1 + "/" + this.dataVariation + "?size=" + this.size
+      this.$forceUpdate()
+    }
   },
   watch : {
     id : 'setDataSrc'

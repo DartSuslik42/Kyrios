@@ -1,7 +1,7 @@
 <template>
   <div @click="$emit('click', true)">
     <button v-if="corp" class="default text">
-      <img-evetech :category="'corporations'" :id="corp.id" class="image"/>
+      <img-evetech :category="'corporations'" :id="corp.iconID" class="image"/>
       <span>{{corp.name}}</span>
     </button>
 

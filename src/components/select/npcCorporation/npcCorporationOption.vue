@@ -1,6 +1,6 @@
 <template>
   <button @click="selected" class="default text" :class="{ selected : this.isSelected }">
-    <img-evetech :category="'corporations'" :id="corp.id" class="image"/>
+    <img-evetech :category="'corporations'" :id="corp.iconID" class="image"/>
     <span>{{corp.name}}</span>
   </button>
 </template>

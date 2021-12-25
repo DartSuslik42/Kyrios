@@ -1,5 +1,6 @@
 import axiosESI from "./axiosESI.js";
 import axiosSDE from "./axiosSDE.js";
+import localStorage from "./LocalStorage.js";
 export const npcCorporationsModule = {
     namespaced : true,
     state(){
@@ -58,37 +59,20 @@ export const npcCorporationsModule = {
             await dispatch('fetchCorporations')
 
             let rawFactionsCorps = []
+            let responseCorporations = await localStorage.getCorporationsIDs()
 
-            let responseID = []
-            let responseDescriptions = []
-            let responseFaction = []
-            let NPCCorpsIDs = await axiosESI.getNPCCorpsIDs()
-            NPCCorpsIDs = NPCCorpsIDs.slice(0, 20)
-
-            for(let corpID of NPCCorpsIDs){
-                const p = getters.getCorpFaction(corpID)
-                if(p){
-                    responseID.push(corpID)
-                    responseDescriptions.push( await axiosESI.getCorpInfo(corpID))
-                    responseFaction.push(p)
-                }
-            }
-
-            for(let i = 0; i < responseID.length; i++){
-                const index = rawFactionsCorps.map(e => e.Faction.id).indexOf(responseFaction[i].id);
+            for (let i = 0; i < responseCorporations.length; i++) {
+                const responseFaction = getters.getCorpFaction(responseCorporations[i].id)
+                const index = rawFactionsCorps.map(e => e.Faction.id).indexOf(responseFaction.id);
                 if (index < 0){
                     rawFactionsCorps.push({
-                        Faction : responseFaction[i],
-                        Corporations : [{
-                            id : responseID[i],
-                            name : responseDescriptions[i].name,
-                        }]
+                        Faction : responseFaction,
+                        Corporations : [
+                            responseCorporations[i]
+                        ]
                     })
                 }else{
-                    rawFactionsCorps[index].Corporations.push({
-                        id : responseID[i],
-                        name : responseDescriptions[i].name,
-                    })
+                    rawFactionsCorps[index].Corporations.push(responseCorporations[i])
                 }
             }
             commit('setFactionsCorps', rawFactionsCorps)
