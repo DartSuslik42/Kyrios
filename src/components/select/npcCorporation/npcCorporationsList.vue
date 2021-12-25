@@ -43,13 +43,6 @@ export default {
   min-width: 300px;
   height: 100%;
 }
-.list::-webkit-scrollbar{
-  width: 6px;
-  background-color: #090909;
-}
-.list::-webkit-scrollbar-thumb{
-  background-color: #484848;
-}
 .list-item{
   width: 100%;
   align-self: stretch;

@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 table{
   background-color: #0C0C0C;
   border-collapse: collapse;
