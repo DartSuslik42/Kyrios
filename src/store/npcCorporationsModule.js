@@ -59,7 +59,7 @@ export const npcCorporationsModule = {
             await dispatch('fetchCorporations')
 
             let rawFactionsCorps = []
-            let responseCorporations = await localStorage.getCorporationsIDs()
+            let responseCorporations = await localStorage.getCorporations()
 
             for (let i = 0; i < responseCorporations.length; i++) {
                 const responseFaction = getters.getCorpFaction(responseCorporations[i].id)
