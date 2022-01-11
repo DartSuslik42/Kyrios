@@ -1,14 +1,16 @@
 <template>
-  <div class="list">
-    <npc-faction-option
-        @selected="factionSelected"
-        class="list-item"
-        v-for="(faction, idx) in factions"
+  <tr class="list">
+    <td v-for="(faction, idx) in factions"
         :key="idx"
-        :faction="faction"
-        :is-selected="isSelectedFaction(faction.id)"
-    ></npc-faction-option>
-  </div>
+    >
+      <npc-faction-option
+          @selected="factionSelected"
+          class="list-item"
+          :faction="faction"
+          :is-selected="isSelectedFaction(faction.id)"
+      />
+    </td>
+  </tr>
 </template>
 
 <script>
@@ -42,10 +44,18 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   min-width: 170px;
-  overflow: auto;
 }
 .list-item{
   width: 100%;
   align-self: stretch;
+}
+tr {
+  display: table-cell;
+  height: 100%;
+  overflow-y: auto;
+}
+tr td {
+  display: block;
+  width: 100%;
 }
 </style>

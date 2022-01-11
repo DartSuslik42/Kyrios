@@ -1,33 +1,48 @@
 <template>
-  <div v-if="corp">
+  <div class="main">
+    <h6 class="title">LP-Offers</h6>
     <table>
-      <tr>
-        <th>Item</th>
-        <th>LP</th>
-        <th>ISK</th>
-        <th>Other Requirements</th>
-        <th>Other Cost</th>
-        <th>Sell Price</th>
-  <!--      <th>Buy Price</th>-->
-        <th>isk/lp</th>
-      </tr>
-      <tr v-for="(trade, idx) in trades" :key="idx">
-        <th>
-          <Item_Amount_Element :type_id="trade.type_id" :quantity="trade.quantity"></Item_Amount_Element>
-        </th>
-        <th>{{trade.lp_cost}}</th>
-        <th>{{trade.isk_cost}}</th>
-        <th>
-          <ul class="list_required_items">
-            <li v-for="(item,idx) in trade.required_items" :key="idx">
-              <Item_Amount_Element :quantity="item.quantity" :type_id="item.type_id"></Item_Amount_Element>
-            </li>
-          </ul>
-        </th>
-        <th> ??? </th>
-        <th> ??? </th>
-        <th> ??? </th>
-      </tr>
+      <thead>
+        <tr>
+          <th class="col-1">Item</th>
+          <th class="col-2">LP</th>
+          <th class="col-3">ISK</th>
+          <th class="col-4">Other Requirements</th>
+          <th class="col-5">Other Cost</th>
+          <th class="col-6">Sell Price</th>
+          <th class="col-7">ISK/LP</th>
+        </tr>
+      </thead>
+      <tbody v-if="!loading" class="content">
+        <tr v-for="(trade, idx) in trades" :key="idx">
+          <td class="col-1">
+            <Item_Amount_Element :type_id="trade.type_id" :quantity="trade.quantity"></Item_Amount_Element>
+          </td>
+          <td class="col-2">{{trade.lp_cost}} LP</td>
+          <td class="col-3">{{trade.isk_cost}} ISK</td>
+          <td class="col-4">
+            <ul class="list_required_items">
+              <li v-for="(item,idx) in trade.required_items" :key="idx">
+                <Item_Amount_Element :quantity="item.quantity" :type_id="item.type_id"></Item_Amount_Element>
+              </li>
+            </ul>
+          </td>
+          <td class="col-5"></td>
+          <td class="col-6"></td>
+          <td class="col-7"></td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td class="col-1"></td>
+          <td class="col-2"></td>
+          <td class="col-3"></td>
+          <td class="col-4"></td>
+          <td class="col-5"></td>
+          <td class="col-6"></td>
+          <td class="col-7"></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
@@ -45,12 +60,15 @@ export default {
   },
   data(){
     return{
-      trades : []
+      trades : [],
+      loading : true,
     }
   },
   watch:{
     async corp(newVal){
+      this.loading = true
       this.trades = await axiosESI.getCorpLPOffers(newVal?.id)
+      this.loading = false
     }
   },
 }
@@ -60,5 +78,64 @@ export default {
 .list_required_items{
   list-style-type : none;
   margin: 0 0;
+  padding: 0 0;
+}
+table, th, td{
+  border: 1px solid rgb(32, 32, 32);
+  border-collapse: collapse;
+  text-align: left;
+}
+td{
+  border-width: 0px 1px;
+}
+tbody.content tr:hover{
+  background-color: rgb(32,32,32);
+}
+th{
+  padding: 5px 5px 3px 5px;
+}
+td{
+  padding: 5px 5px;
+}
+.title{
+  text-align: left;
+  padding: 3px 0px 9px 1px;
+  margin: 0 0;
+  font-size: 15px;
+}
+table{
+  width: 100%;
+  height: 100%;
+  background-color: rgb(21,21,21);
+}
+thead{
+  /*display: block;*/
+}
+tbody{
+  height: 100%;
+  /*display: block;*/
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.col-1{
+  width: 25%;
+}
+.col-2{
+  width: 10%;
+}
+.col-3{
+  width: 10%;
+}
+.col-4{
+  width: 25%;
+}
+.col-5{
+  width: 10%;
+}
+.col-6{
+  width: 10%;
+}
+.col-7{
+  width: 10%;
 }
 </style>

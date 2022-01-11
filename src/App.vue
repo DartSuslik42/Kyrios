@@ -1,9 +1,7 @@
 <template>
   <div id="app" class="text">
-    <div v-if="!this.loading">
-      <select-npc-corporation :corps="FactionsCorps" v-model="selected" class="selector"/>
-      <table-lptrades :corp="this.selected" class="table"></table-lptrades>
-    </div>
+    <select-npc-corporation :corps="FactionsCorps" v-model="selected" class="selector"/>
+<!--    <table-lptrades :corp="this.selected" class="table"/>-->
   </div>
 </template>
 
@@ -17,7 +15,6 @@ export default {
   data(){
     return{
       selected : null,
-      loading : true
     }
   },
   methods:{
@@ -32,17 +29,17 @@ export default {
   },
   async created(){
     await this.fetchFactionsCorps()
-    this.loading = false
   }
 }
 </script>
 
 <style>
 .text {
-  font-family: "Microsoft Sans Serif";
+  font-family: "Microsoft Sans Serif", sans-serif;
   text-align: left;
   color: #9F9F9F;
   font-weight: bold;
+  font-size: 10px;
 }
 ::-webkit-scrollbar{
   width: 6px;
@@ -51,21 +48,32 @@ export default {
 ::-webkit-scrollbar-thumb{
   background-color: #484848;
 }
+*{
+  border-color: rgb(32,32,32);
+  padding: 0;
+  margin: 0;
+}
 </style>
 <style scoped>
 #app{
-  margin: 0 0;
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
   background-color: #030303;
+  overflow: scroll;
 }
 .selector {
-  width: 0;
-  height: 0;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 .table{
+  width: 100%;
   position: relative;
   left : 0;
-  top : 2em;
+  top : 3em;
+  height: 500px;
 }
 </style>

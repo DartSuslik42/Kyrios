@@ -32,9 +32,19 @@ export default {
 <style scoped>
 .block{
   width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 .name{
+  text-align: left;
+  text-overflow: fade;
+  min-width: 0;
+  overflow: hidden;
+  flex: 1 1 10px
 }
 .amount{
+  text-align: right;
+  flex: 0 0 50px
 }
 </style>

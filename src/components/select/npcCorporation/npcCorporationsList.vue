@@ -1,14 +1,16 @@
 <template>
-  <div class="list">
-    <npc-corporation-option
-        @selected="corpSelected"
-        class="list-item"
-        v-for="(corp, idx) in corps"
+  <tr class="list">
+    <td v-for="(corp, idx) in corps"
         :key="idx"
-        :corp="corp"
-        :is-selected="isSelectedCorp(corp.id)"
-    ></npc-corporation-option>
-  </div>
+    >
+      <npc-corporation-option
+          @selected="corpSelected"
+          class="list-item"
+          :corp="corp"
+          :is-selected="isSelectedCorp(corp.id)"
+      />
+    </td>
+  </tr>
 </template>
 
 <script>
@@ -38,13 +40,23 @@ export default {
 <style scoped>
 .list{
   width: 100%;
+  display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  overflow-y: auto;
   min-width: 300px;
-  height: 100%;
 }
 .list-item{
   width: 100%;
   align-self: stretch;
+}
+
+tr {
+  display: table-cell;
+  height: 100%;
+  overflow-y: auto;
+}
+tr td {
+  display: block;
+  width: 100%;
 }
 </style>

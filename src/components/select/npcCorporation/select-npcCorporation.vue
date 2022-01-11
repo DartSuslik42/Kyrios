@@ -1,42 +1,39 @@
 <template>
-  <div>
-    <npc-corporation-selected
+  <div class="selector">
+    <npc-corporation-selected class="content"
         :corp="value"
         @click="()=>{this.showTable = true}"
-        v-if="!showTable"
     ></npc-corporation-selected>
-    <my-dialog v-model="showTable">
-      <table>
-        <tr>
-          <td class="factions">
-            <npc-faction-list :factions="factions" :selected="selectedFaction" @selected="factionSelected"></npc-faction-list>
-          </td>
-          <td v-if="selectedFaction" class="corps">
-            <npc-corporations-list
-                :corps="corporations(selectedFaction.id)"
-                :selected="value"
-                @selected="corpSelected"
-            >
-            </npc-corporations-list>
-          </td>
-        </tr>
-      </table>
-    </my-dialog>
+    <table class="content"
+           v-if="showTable"
+    >
+      <npc-faction-list
+          :factions="factions"
+          :selected="selectedFaction"
+          @selected="factionSelected"
+      />
+      <npc-corporations-list
+          v-if="selectedFaction"
+          :corps="getFactionCorporations(selectedFaction.id)"
+          :selected="value"
+          @selected="corpSelected"
+      />
+    </table>
   </div>
 </template>
 <script>
 import NpcCorporationsList from "./npcCorporationsList.vue";
 import NpcFactionList from "./npcFactionList.vue";
-import MyDialog from "components/customComponents/myDialog.vue";
 import NpcCorporationSelected from "./npcCorporation-selected.vue";
 import {mapGetters} from "vuex"
 export default {
   name: "select-npcCorporation",
-  components: {NpcCorporationSelected, MyDialog, NpcFactionList, NpcCorporationsList},
+  components: {NpcCorporationSelected, NpcFactionList, NpcCorporationsList},
   props:{
     corps : {
       required : true
     },
+    // v-model value bind for selected corp in corps
     value :{
       default : null
     }
@@ -54,7 +51,7 @@ export default {
   computed:{
     ...mapGetters({
       factions : "npcCorporationsModule/getFactions",
-      corporations : "npcCorporationsModule/getCorporations",
+      getFactionCorporations : "npcCorporationsModule/getCorporations",
     })
   },
   data(){
@@ -68,20 +65,24 @@ export default {
 </script>
 
 <style scoped>
+.content{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.selector{
+  height: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+}
 table{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   background-color: #0C0C0C;
   border-collapse: collapse;
-  height: 1px;
-}
-.corps {
-  width: 70%;
-  padding: 0 0;
-  vertical-align: top;
-  overflow-y: auto;
-}
-.factions{
-  width: 30%;
-  padding: 0 0;
-  vertical-align: top;
+  border-spacing: 0;
+  height: 100%;
 }
 </style>
