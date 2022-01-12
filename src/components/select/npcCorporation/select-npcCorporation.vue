@@ -4,7 +4,7 @@
         :corp="value"
         @click="()=>{this.showTable = true}"
     ></npc-corporation-selected>
-    <table class="content"
+    <table class="content-list"
            v-if="showTable"
     >
       <npc-faction-list
@@ -66,12 +66,17 @@ export default {
 
 <style scoped>
 .content{
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.content-list{
   position: absolute;
+  z-index: 100;
   top: 0;
   left: 0;
 }
 .selector{
-  height: 100%;
   position: relative;
   top: 0;
   left: 0;

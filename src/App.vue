@@ -1,7 +1,8 @@
 <template>
   <div id="app" class="text">
     <select-npc-corporation :corps="FactionsCorps" v-model="selected" class="selector"/>
-<!--    <table-lptrades :corp="this.selected" class="table"/>-->
+    <h6 class="title">LP-Offers</h6>
+    <table-lptrades :corp="this.selected" class="table"/>
   </div>
 </template>
 
@@ -65,15 +66,23 @@ export default {
   overflow: scroll;
 }
 .selector {
-  position: absolute;
-  top: 0px;
-  left: 0px;
+  position: static;
+  top: 0;
+  left: 0;
 }
 .table{
   width: 100%;
-  position: relative;
+  position: static;
   left : 0;
   top : 3em;
   height: 500px;
+}
+.title{
+  position: static;
+  top: 2em;
+  left: 0;
+  text-align: left;
+  padding: 3px 0px 9px 1px;
+  font-size: 15px;
 }
 </style>

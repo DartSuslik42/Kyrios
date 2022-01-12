@@ -1,50 +1,47 @@
 <template>
-  <div class="main">
-    <h6 class="title">LP-Offers</h6>
-    <table>
-      <thead>
-        <tr>
-          <th class="col-1">Item</th>
-          <th class="col-2">LP</th>
-          <th class="col-3">ISK</th>
-          <th class="col-4">Other Requirements</th>
-          <th class="col-5">Other Cost</th>
-          <th class="col-6">Sell Price</th>
-          <th class="col-7">ISK/LP</th>
-        </tr>
-      </thead>
-      <tbody v-if="!loading" class="content">
-        <tr v-for="(trade, idx) in trades" :key="idx">
-          <td class="col-1">
-            <Item_Amount_Element :type_id="trade.type_id" :quantity="trade.quantity"></Item_Amount_Element>
-          </td>
-          <td class="col-2">{{trade.lp_cost}} LP</td>
-          <td class="col-3">{{trade.isk_cost}} ISK</td>
-          <td class="col-4">
-            <ul class="list_required_items">
-              <li v-for="(item,idx) in trade.required_items" :key="idx">
-                <Item_Amount_Element :quantity="item.quantity" :type_id="item.type_id"></Item_Amount_Element>
-              </li>
-            </ul>
-          </td>
-          <td class="col-5"></td>
-          <td class="col-6"></td>
-          <td class="col-7"></td>
-        </tr>
-      </tbody>
-      <tbody v-else>
-        <tr>
-          <td class="col-1"></td>
-          <td class="col-2"></td>
-          <td class="col-3"></td>
-          <td class="col-4"></td>
-          <td class="col-5"></td>
-          <td class="col-6"></td>
-          <td class="col-7"></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table>
+    <thead>
+      <tr>
+        <th class="col-1">Item</th>
+        <th class="col-2">LP</th>
+        <th class="col-3">ISK</th>
+        <th class="col-4">Other Requirements</th>
+        <th class="col-5">Other Cost</th>
+        <th class="col-6">Sell Price</th>
+        <th class="col-7">ISK/LP</th>
+      </tr>
+    </thead>
+    <tbody v-if="!loading" class="content">
+      <tr v-for="(trade, idx) in trades" :key="idx">
+        <td class="col-1">
+          <Item_Amount_Element :type_id="trade.type_id" :quantity="trade.quantity"></Item_Amount_Element>
+        </td>
+        <td class="col-2">{{trade.lp_cost}} LP</td>
+        <td class="col-3">{{trade.isk_cost}} ISK</td>
+        <td class="col-4">
+          <ul class="list_required_items">
+            <li v-for="(item,idx) in trade.required_items" :key="idx">
+              <Item_Amount_Element :quantity="item.quantity" :type_id="item.type_id"></Item_Amount_Element>
+            </li>
+          </ul>
+        </td>
+        <td class="col-5"></td>
+        <td class="col-6"></td>
+        <td class="col-7"></td>
+      </tr>
+    </tbody>
+    <tbody v-else>
+      <tr>
+        <td class="col-1"></td>
+        <td class="col-2"></td>
+        <td class="col-3"></td>
+        <td class="col-4"></td>
+        <td class="col-5"></td>
+        <td class="col-6"></td>
+        <td class="col-7"></td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -77,8 +74,6 @@ export default {
 <style scoped>
 .list_required_items{
   list-style-type : none;
-  margin: 0 0;
-  padding: 0 0;
 }
 table, th, td{
   border: 1px solid rgb(32, 32, 32);
@@ -97,23 +92,15 @@ th{
 td{
   padding: 5px 5px;
 }
-.title{
-  text-align: left;
-  padding: 3px 0px 9px 1px;
-  margin: 0 0;
-  font-size: 15px;
-}
 table{
   width: 100%;
   height: 100%;
   background-color: rgb(21,21,21);
 }
 thead{
-  /*display: block;*/
 }
 tbody{
   height: 100%;
-  /*display: block;*/
   overflow-y: auto;
   overflow-x: hidden;
 }
