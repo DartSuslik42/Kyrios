@@ -73,14 +73,10 @@ export default {
 .table{
   width: 100%;
   position: static;
-  left : 0;
-  top : 3em;
   height: 500px;
 }
 .title{
   position: static;
-  top: 2em;
-  left: 0;
   text-align: left;
   padding: 3px 0px 9px 1px;
   font-size: 15px;
