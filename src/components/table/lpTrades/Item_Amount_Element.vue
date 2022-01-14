@@ -25,6 +25,11 @@ export default {
   async created() {
     const typeInfo = await axiosESI.getTypeInformation(this.type_id)
     this.name = typeInfo.name
+    console.debug({
+      source : "Item_Amount_Element",
+      type_id: this.type_id,
+      name: typeInfo.name,
+    })
   }
 }
 </script>

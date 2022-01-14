@@ -29,8 +29,8 @@
               </li>
             </ul>
           </td>
-          <td class="col-5"></td>
-          <td class="col-6"></td>
+          <td class="col-5">{{getArrPrice(trade.required_items)}}</td>
+          <td class="col-6">{{getPrice(trade.type_id)}}</td>
           <td class="col-7"></td>
         </tr>
         </tbody>
@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import axiosESI from "store/axiosESI.js";
+import axiosESI from "../../../store/axiosESI.js";
+import LocalStorage from "../../../store/LocalStorage.js";
 import Item_Amount_Element from "./Item_Amount_Element.vue";
 export default {
   name: "table-lptrades",
@@ -65,6 +66,23 @@ export default {
     return{
       trades : [],
       loading : true,
+    }
+  },
+  methods:{
+    // async getPrice(type_id){
+    //   const ret = await axiosESI.getMarketOrders(type_id, null, null)
+    //   return ret[0].price
+    // },
+    getPrice(type_id){
+      return LocalStorage.getMarketPrice(type_id).adjusted_price
+    },
+    getArrPrice(arr){
+      let price = 0
+      arr.forEach(el =>{
+        const p = this.getPrice(el.type_id)
+        price += p * el.quantity
+      })
+      return price
     }
   },
   watch:{

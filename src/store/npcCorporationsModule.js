@@ -1,6 +1,6 @@
 import axiosESI from "./axiosESI.js";
 import axiosSDE from "./axiosSDE.js";
-import localStorage from "./LocalStorage.js";
+import LocalStorage from "./LocalStorage.js";
 export const npcCorporationsModule = {
     namespaced : true,
     state(){
@@ -59,7 +59,7 @@ export const npcCorporationsModule = {
             await dispatch('fetchCorporations')
 
             let rawFactionsCorps = []
-            let responseCorporations = await localStorage.getCorporations()
+            let responseCorporations = LocalStorage.getCorporations()
 
             for (let i = 0; i < responseCorporations.length; i++) {
                 const responseFaction = getters.getCorpFaction(responseCorporations[i].id)
