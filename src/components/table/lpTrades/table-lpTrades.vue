@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <table id="table-headers">
+    <table id="table-content">
       <thead>
         <tr>
           <th class="col-1">Item</th>
@@ -12,10 +12,7 @@
           <th class="col-7">ISK/LP</th>
         </tr>
       </thead>
-    </table>
-    <div id="content">
-      <table id="table-content">
-        <tbody v-if="!loading" class="content">
+      <tbody v-if="!loading" class="content">
         <tr v-for="(trade, idx) in trades" :key="idx">
           <td class="col-1">
             <Item_Amount_Element :type_id="trade.type_id" :quantity="trade.quantity"></Item_Amount_Element>
@@ -33,8 +30,8 @@
           <td class="col-6">{{getPrice(trade.type_id)}}</td>
           <td class="col-7"></td>
         </tr>
-        </tbody>
-        <tbody v-else>
+      </tbody>
+      <tbody v-else>
         <tr>
           <td class="col-1"></td>
           <td class="col-2"></td>
@@ -44,9 +41,8 @@
           <td class="col-6"></td>
           <td class="col-7"></td>
         </tr>
-        </tbody>
-      </table>
-    </div>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -100,31 +96,44 @@ export default {
   list-style-type : none;
 }
 table, th, td{
-  border: 1px solid rgb(32, 32, 32);
-  border-collapse: collapse;
+  border-color: rgb(32, 32, 32);
+  border-width: 0 1px 0 0;
+  border-style: solid;
+  border-spacing: 0;
   text-align: left;
 }
-#content{
+#main{
+  position: relative;
+  top: 0;
+  left: 0;
+  width: calc(100% - 2px);
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 100%;
+  border: 1px solid rgb(32, 32, 32);
 }
-#content::-webkit-scrollbar{
+#main::-webkit-scrollbar{
   display: none;
 }
 th{
   padding: 5px 5px 3px 5px;
+  background-color: rgb(21,21,21);
+  position: sticky;
+  top: 0;
+  border-bottom-width: 1px;
 }
 td{
+  border-width: 0 1px 0 0;
   padding: 5px 5px;
-  border-width: 0 1px;
 }
 #table-content{
+  position: relative;
+  top: 0;
+  left: 0;
   height: 100%;
-}
-table{
   width: 100%;
   background-color: rgb(21,21,21);
+
+  border-width: 0;
 }
 .col-1{
   width: 25%;
@@ -146,13 +155,9 @@ table{
 }
 .col-7{
   width: 10%;
+  border-right-width: 0;
 }
 tbody.content tr:hover{
   background-color: rgb(32,32,32);
-}
-#main{
-  position: relative;
-  top: 0;
-  left: 0;
 }
 </style>
