@@ -72,9 +72,15 @@ class axiosESI {
         return promise.data
     }
 
-    async getNamesByIDs(arr){   // [id] => [id, name, category]
+    async getNamesByIDs(array){   // [id] => [id, name, category]
+        // Выделение уникальных id
+        const _arr = array.filter((el,idx,arr)=>{
+            return arr.indexOf(el) === idx;
+        })
+
+        // В запрос должен передаваться массив, содержащий только уникальные id
         const promise = await axios
-            .post("https://esi.evetech.net/latest/universe/names/?datasource=tranquility", arr)
+            .post("https://esi.evetech.net/latest/universe/names/?datasource=tranquility", _arr)
             .catch(error => console.log(error))
         console.debug(promise)
         return promise.data

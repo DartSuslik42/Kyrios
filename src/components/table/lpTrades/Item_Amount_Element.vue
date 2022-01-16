@@ -1,36 +1,18 @@
 <template>
   <span class="block">
-    <a class="name">{{name}}</a>
-    <a class="amount" >{{quantity}}</a>
+    <a class="name">{{item.name}}</a>
+    <a class="amount" >{{item.quantity}}</a>
   </span>
 </template>
 
 <script>
-import axiosESI from "../../../store/axiosESI.js";
 export default {
   name: "Item_Amount_Element",
   props: {
-    type_id : {
-      required : true
-    },
-    quantity : {
-      required : true
+    item : {
+      required : true,
     },
   },
-  data(){
-    return{
-      name : "",
-    }
-  },
-  async created() {
-    const typeInfo = await axiosESI.getTypeInformation(this.type_id)
-    this.name = typeInfo.name
-    console.debug({
-      source : "Item_Amount_Element",
-      type_id: this.type_id,
-      name: typeInfo.name,
-    })
-  }
 }
 </script>
 

@@ -4,21 +4,21 @@
       <thead>
         <tr-trade-header/>
       </thead>
-      <tbody v-if="!loading" class="content">
-        <tr-trade-element v-for="(trade, idx) in trades" :key="idx" :trade="trade"/>
+      <tbody class="content">
+        <template v-if="!loading">
+          <tr-trade-element v-for="(trade, idx) in trades" :key="idx" :trade="trade"/>
+        </template>
       </tbody>
-      <tbody v-else>
-        <tr-trade-element-empty/>
-      </tbody>
+      <tr-trade-element-empty class="table-empty"/>
     </table>
   </div>
 </template>
 
 <script>
-import axiosESI from "../../../store/axiosESI.js";
 import TrTradeHeader from "./tr-trade-header.vue";
 import TrTradeElement from "./tr-trade-element.vue";
 import TrTradeElementEmpty from "./tr-trade-element-empty.vue";
+import {mapActions, mapState} from "vuex";
 export default {
   name: "table-lptrades",
   components: {TrTradeElementEmpty, TrTradeElement, TrTradeHeader},
@@ -29,14 +29,23 @@ export default {
   },
   data(){
     return{
-      trades : [],
       loading : true,
     }
+  },
+  computed:{
+    ...mapState({
+      trades : state => state.lpTradesModule.trades,
+    })
+  },
+  methods:{
+    ...mapActions({
+      fetchTrades : "lpTradesModule/fetchTrades",
+    })
   },
   watch:{
     async corp(newVal){
       this.loading = true
-      this.trades = await axiosESI.getCorpLPOffers(newVal?.id)
+      await this.fetchTrades(newVal?.id)
       this.loading = false
     }
   },
@@ -88,21 +97,26 @@ export default {
   width: 25%;
 }
 #table-npc-trades .col-2{
+  text-align: right;
   width: 10%;
 }
 #table-npc-trades .col-3{
+  text-align: right;
   width: 10%;
 }
 #table-npc-trades .col-4{
   width: 25%;
 }
 #table-npc-trades .col-5{
+  text-align: right;
   width: 10%;
 }
 #table-npc-trades .col-6{
+  text-align: right;
   width: 10%;
 }
 #table-npc-trades .col-7{
+  text-align: right;
   width: 10%;
   border-right-width: 0;
 }
@@ -113,10 +127,13 @@ export default {
   position: relative;
   top: 0;
   left: 0;
-  height: 100%;
+  height: inherit;
   width: 100%;
   background-color: rgb(21,21,21);
 
   border-width: 0;
+}
+.table-empty{
+  height: inherit;
 }
 </style>
