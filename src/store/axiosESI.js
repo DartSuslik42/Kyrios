@@ -55,13 +55,12 @@ class axiosESI {
     }
 
     async getMarketOrders(type_id, region_id, order_type){
-        region_id = "10000002"
-        order_type = "buy" // buy / sell / all
         const promise = await axios
-            .get("https://esi.evetech.net/latest/markets/"+region_id+"/orders/?datasource=tranquility&order_type="+order_type+"&page=1&type_id="+type_id)
+            // .get("https://esi.evetech.net/latest/markets/"+region_id+"/orders/?datasource=tranquility&order_type="+order_type+"&page=1&type_id="+type_id)
+            .get("https://esi.evetech.net/latest/markets/10000002/orders/?datasource=tranquility&order_type="+order_type+"&page=1&type_id="+type_id)
             .catch(error => console.log(error))
         console.debug(promise)
-        return promise.data;
+        return promise.data
     }
 
     async getMarketPriceHistory(type_id, region_id){

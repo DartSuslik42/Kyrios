@@ -4,23 +4,22 @@
       <Item_Amount_Element :type_id="trade.type_id" :quantity="trade.quantity"></Item_Amount_Element>
     </td>
     <td class="col-2">{{trade.lp_cost}} LP</td>
-    <td class="col-3">{{trade.isk_cost}} ISK</td>
+    <td class="col-3">{{$format.EVE_number(trade.isk_cost)}} ISK</td>
     <td class="col-4">
       <ul class="list_required_items">
-        <li v-for="(item,idx) in trade.required_items" :key="idx">
+        <li v-for="(item, idx) in trade.required_items" :key="idx">
           <Item_Amount_Element :quantity="item.quantity" :type_id="item.type_id"></Item_Amount_Element>
         </li>
       </ul>
     </td>
-    <td class="col-5">{{getArrPrice(trade.required_items)}} ISK</td>
-    <td class="col-6">{{getPrice(trade.type_id)}} ISK</td>
-    <td class="col-7"></td>
+    <td class="col-5">{{$format.EVE_number(other_price)}} ISK</td>
+    <td class="col-6">{{$format.EVE_number(sell_price)}} ISK</td>
+    <td class="col-7">{{$format.EVE_number(isk_per_lp)}}</td>
   </tr>
 </template>
-
 <script>
 import Item_Amount_Element from "./Item_Amount_Element.vue";
-import LocalStorage from "../../../store/LocalStorage.js";
+import axiosESI from "../../../store/axiosESI.js";
 export default {
   name: "tr-trade-element",
   components: {Item_Amount_Element},
@@ -29,23 +28,36 @@ export default {
       required : true,
     }
   },
+  data(){
+    return{
+      other_price : null,
+      sell_price : null,
+      isk_per_lp : null,
+      trade_info : null,
+    }
+  },
   methods : {
-    // async getPrice(type_id){
-    //   const ret = await axiosESI.getMarketOrders(type_id, null, null)
-    //   return ret[0].price
-    // },
-    getPrice(type_id){
-      return LocalStorage.getMarketPrice(type_id).adjusted_price
+    async getPrice(type_id, region_id, order_type){
+      const marketOrders = await axiosESI.getMarketOrders(type_id, region_id, order_type)
+      if(marketOrders?.length){
+        return marketOrders[0].price
+      }
+      return 0
     },
-    getArrPrice(arr){
+    async getArrPrice(arr){
       let price = 0
-      arr.forEach(el =>{
-        const p = this.getPrice(el.type_id)
-        price += p * el.quantity
-      })
+      for(let el of arr){
+          const p = await this.getPrice(el.type_id, null, "sell")
+          price += p * el.quantity
+      }
       return price
     },
   },
+  async created() {
+    this.sell_price = await this.getPrice(this.trade.type_id, null, "buy")
+    this.other_price = await this.getArrPrice(this.trade.required_items)
+    this.trade_info = await axiosESI.getTypeInformation(this.trade.type_id)
+  }
 }
 </script>
 
