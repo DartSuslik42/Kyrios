@@ -85,8 +85,8 @@ table{
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
-  background-color: #0C0C0C;
   border-collapse: collapse;
+  background-color: #0C0C0C;
   border-spacing: 0;
   height: 100%;
 }

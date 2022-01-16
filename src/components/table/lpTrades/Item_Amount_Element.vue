@@ -35,6 +35,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  background-color: inherit;
+}
 .block{
   width: 100%;
   display: flex;

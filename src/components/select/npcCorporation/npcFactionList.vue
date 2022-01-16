@@ -38,6 +38,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  background-color: inherit;
+}
 .list{
   width: 100%;
   display: flex;

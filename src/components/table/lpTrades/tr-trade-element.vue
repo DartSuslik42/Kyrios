@@ -50,6 +50,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  background-color: inherit;
+}
 .list_required_items{
   list-style-type : none;
 }

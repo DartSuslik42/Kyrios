@@ -27,7 +27,6 @@ export default {
 
 <style scoped>
 .default{
-  background-color: #030303;
   padding: 3px 7px 1px 3px;
   display: flex;
   align-items: center;
@@ -39,11 +38,5 @@ export default {
   padding: 2px 7px 2px 2px;
   width: 25px;
   height: 25px;
-}
-.text {
-  font-family: "Microsoft Sans Serif";
-  text-align: left;
-  color: #9F9F9F;
-  font-weight: bold;
 }
 </style>

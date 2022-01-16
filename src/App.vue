@@ -28,9 +28,9 @@ export default {
       FactionsCorps : "npcCorporationsModule/FactionsCorps"
     })
   },
-  async created(){
+  async created() {
     await this.fetchFactionsCorps()
-  }
+  },
 }
 </script>
 
@@ -50,6 +50,7 @@ export default {
   background-color: #484848;
 }
 *{
+  background-color: rgb(3, 3, 3);
   border-color: rgb(32,32,32);
   padding: 0;
   margin: 0;

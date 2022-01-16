@@ -17,6 +17,9 @@ export default {
 </script>
 
 <style scoped>
+*{
+  background-color: inherit;
+}
 th{
   border-color: rgb(32, 32, 32);
   border-width: 0 1px 1px 0;
@@ -24,7 +27,6 @@ th{
   border-spacing: 0;
   text-align: left;
   padding: 5px 5px 3px 5px;
-  /*background-color: rgb(21,21,21);*/
   position: sticky;
   top: 0;
 }
