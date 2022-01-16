@@ -12,9 +12,9 @@
         </li>
       </ul>
     </td>
-    <td class="col-5">{{$format.EVE_number(other_price)}} ISK</td>
-    <td class="col-6">{{$format.EVE_number(sell_price)}} ISK</td>
-    <td class="col-7">{{$format.EVE_number(isk_per_lp)}}</td>
+    <td class="col-5"><a v-if="other_price">{{$format.EVE_number(other_price)}} ISK</a></td>
+    <td class="col-6"><a v-if="sell_price"> {{$format.EVE_number(sell_price)}} ISK</a></td>
+    <td class="col-7"><a :class="{green : isk_per_lp > 0, red : isk_per_lp < 0 }">{{$format.EVE_number(isk_per_lp)}}</a></td>
   </tr>
 </template>
 <script>
@@ -67,5 +67,11 @@ export default {
 }
 .list_required_items{
   list-style-type : none;
+}
+.green{
+  color: forestgreen;
+}
+.red{
+  color: darkred;
 }
 </style>
