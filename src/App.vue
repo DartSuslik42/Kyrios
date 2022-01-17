@@ -1,8 +1,10 @@
 <template>
   <div id="app" class="text">
     <select-npc-corporation :corps="FactionsCorps" v-model="selected" class="selector"/>
-    <h6 class="title">LP-Offers <a style="color: dodgerblue">NO BLUEPRINTS</a></h6>
-    <table-lptrades :corp="this.selected" class="table"/>
+    <div id="lp-trades">
+      <h6 class="title">LP-Offers <a style="color: dodgerblue">NO BLUEPRINTS</a></h6>
+      <table-lptrades :corp="this.selected" class="table"/>
+    </div>
   </div>
 </template>
 
@@ -49,6 +51,12 @@ export default {
 ::-webkit-scrollbar-thumb{
   background-color: #484848;
 }
+::-moz-selection { /* Code for Firefox */
+  background: rgba(256,256,256, 10%);
+}
+::selection {
+  background: rgba(256,256,256, 10%);
+}
 *{
   background-color: rgb(3, 3, 3);
   border-color: rgb(32,32,32);
@@ -65,6 +73,11 @@ export default {
   width: 100vw;
   background-color: #030303;
   overflow: scroll;
+  cursor:  default;
+}
+#lp-trades{
+  padding: 5px;
+  width: 80%;
 }
 .selector {
   position: static;
@@ -72,14 +85,13 @@ export default {
   left: 0;
 }
 .table{
-  width: 100%;
   position: static;
-  height: 500px;
+  height: 400px;
 }
 .title{
   position: static;
   text-align: left;
-  padding: 3px 0px 9px 1px;
+  padding: 3px 0 9px 1px;
   font-size: 15px;
 }
 </style>

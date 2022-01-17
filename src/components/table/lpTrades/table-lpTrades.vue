@@ -64,7 +64,6 @@ export default {
   position: relative;
   top: 0;
   left: 0;
-  width: calc(100% - 2px);
   overflow-x: hidden;
   overflow-y: scroll;
   border: 1px solid rgb(32, 32, 32);
@@ -125,7 +124,6 @@ export default {
   border-right-width: 0;
 }
 </style>
-
 <style scoped>
 #table-content{
   position: relative;
