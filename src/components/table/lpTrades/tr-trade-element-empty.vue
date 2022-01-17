@@ -7,6 +7,7 @@
     <td class="col-5"></td>
     <td class="col-6"></td>
     <td class="col-7"></td>
+    <td class="col-8"></td>
   </tr>
 </template>
 

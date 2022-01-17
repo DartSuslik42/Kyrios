@@ -94,7 +94,7 @@ export default {
   background-color: rgb(32,32,32);
 }
 #table-npc-trades .col-1{
-  width: 25%;
+  width: 20%;
 }
 #table-npc-trades .col-2{
   text-align: right;
@@ -105,7 +105,7 @@ export default {
   width: 10%;
 }
 #table-npc-trades .col-4{
-  width: 25%;
+  width: 20%;
 }
 #table-npc-trades .col-5{
   text-align: right;
@@ -116,6 +116,10 @@ export default {
   width: 10%;
 }
 #table-npc-trades .col-7{
+  width: 10%;
+  text-align: right;
+}
+#table-npc-trades .col-8{
   text-align: right;
   width: 10%;
   border-right-width: 0;
@@ -130,7 +134,6 @@ export default {
   height: inherit;
   width: 100%;
   background-color: rgb(21,21,21);
-
   border-width: 0;
 }
 .table-empty{

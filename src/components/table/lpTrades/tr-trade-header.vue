@@ -1,12 +1,13 @@
 <template>
   <tr>
-    <th class="col-1">Item</th>
-    <th class="col-2">LP</th>
-    <th class="col-3">ISK</th>
+    <th class="col-1">Trade Item</th>
+    <th class="col-2">Trade Cost : LP</th>
+    <th class="col-3">Trade Cost : ISK</th>
     <th class="col-4">Other Requirements</th>
-    <th class="col-5">Other Cost</th>
-    <th class="col-6">Sell Price</th>
-    <th class="col-7">ISK/LP</th>
+    <th class="col-5">Other Cost : ISK</th>
+    <th class="col-6">Sell Price : ISK</th>
+    <th class="col-7">Average Volume</th>
+    <th class="col-8">ISK/LP</th>
   </tr>
 </template>
 

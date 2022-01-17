@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="text">
     <select-npc-corporation :corps="FactionsCorps" v-model="selected" class="selector"/>
-    <h6 class="title">LP-Offers</h6>
+    <h6 class="title">LP-Offers <a style="color: dodgerblue">NO BLUEPRINTS</a></h6>
     <table-lptrades :corp="this.selected" class="table"/>
   </div>
 </template>

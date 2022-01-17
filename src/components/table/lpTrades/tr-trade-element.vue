@@ -21,26 +21,31 @@
       </ul>
     </td>
     <td class="col-5">
-      <a v-if="other_price">
-        {{$format.EVE_number(other_price)}} ISK
+      <a v-if="this.trade.required_items.length">
+        <ul class="list_required_items">
+          <li v-for="(item, idx) in trade.required_items" :key="idx">
+            {{$format.EVE_number(item.price)}}
+          </li>
+        </ul>
+        <br/>
+        {{$format.EVE_number(this.trade.required_items_price)}} ISK
       </a>
     </td>
     <td class="col-6">
-      <a v-if="sell_price">
-        {{$format.EVE_number(sell_price)}} ISK
-      </a>
+       {{$format.EVE_number(this.trade.price * this.trade.quantity)}} ISK
     </td>
     <td class="col-7">
-      <a :class="{green : isk_per_lp > 0, red : isk_per_lp < 0 }">
-        {{$format.EVE_number(isk_per_lp)}}
+      {{$format.EVE_number(this.trade.market_volume)}}
+    </td>
+    <td class="col-8">
+      <a :class="{green : this.trade.isk_per_lp > 0, red : this.trade.isk_per_lp < 0 }">
+        {{$format.EVE_number(this.trade.isk_per_lp)}}
       </a>
-      {{this.trade_info}}
     </td>
   </tr>
 </template>
 <script>
 import Item_Amount_Element from "./Item_Amount_Element.vue";
-import axiosESI from "../../../store/axiosESI.js";
 export default {
   name: "tr-trade-element",
   components: {Item_Amount_Element},
@@ -51,34 +56,9 @@ export default {
   },
   data(){
     return{
-      other_price : null,
-      sell_price : null,
       isk_per_lp : null,
-      trade_info : null,
     }
   },
-  methods : {
-    async getPrice(type_id, region_id, order_type){
-      const marketOrders = await axiosESI.getMarketOrders(type_id, region_id, order_type)
-      if(marketOrders?.length){
-        return marketOrders[0].price
-      }
-      return 0
-    },
-    async getArrPrice(arr){
-      let price = 0
-      for(let el of arr){
-          const p = await this.getPrice(el.type_id, null, "sell")
-          price += p * el.quantity
-      }
-      return price
-    },
-  },
-  async created() {
-    this.sell_price = await this.getPrice(this.trade.type_id, null, "buy")
-    this.other_price = await this.getArrPrice(this.trade.required_items)
-    this.trade_info = null
-  }
 }
 </script>
 
