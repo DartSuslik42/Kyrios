@@ -22,7 +22,7 @@ export default {
   background-color: inherit;
 }
 th{
-  border-color: rgb(32, 32, 32);
+  border-color: var(--main-bg-color-content) rgb(32, 32, 32);
   border-width: 0 1px 1px 0;
   border-style: solid;
   border-spacing: 0;

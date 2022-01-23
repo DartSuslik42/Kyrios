@@ -37,11 +37,8 @@ export default {
   align-items: center;
   border-width: 0;
 }
-.default:hover{
-  background-color: #202020;
-}
-.selected {
-  background-color: #202020;
+.default:hover, .selected {
+  background-color: var(--main-bg-color-content-hover);
 }
 .image{
   padding: 2px 7px 2px 2px;

@@ -70,9 +70,9 @@ export default {
   list-style-type : none;
 }
 .green{
-  color: forestgreen;
+  color: var(--color-green);
 }
 .red{
-  color: darkred;
+  color: var(--color-red);
 }
 </style>

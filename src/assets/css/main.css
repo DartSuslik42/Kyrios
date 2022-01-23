@@ -1,0 +1,40 @@
+::-webkit-scrollbar{
+    width: 6px;
+    background-color: var(--scroller-bg-color);
+}
+::-webkit-scrollbar-thumb{
+    background-color: var(--scroller-scroll-color);
+}
+::-moz-selection { /* Code for Firefox */
+    background: var(--main-bg-color-selected);
+}
+::selection {
+    background: var(--main-bg-color-selected);
+}
+*{
+    background-color: var(--main-bg-color-default);
+    border-color: var(--main-brdr-color-default);
+    padding: 0;
+    margin: 0;
+    font-family: "Microsoft Sans Serif", sans-serif;
+    text-align: left;
+    color: var(--main-txt-color-default);
+    font-weight: bold;
+    font-size: 10px;
+}
+:root{
+    --main-bg-color-default : rgb(3, 3, 3);
+    --main-bg-color-content : rgb(21,21,21);
+    --main-bg-color-content-hover : rgb(32,32,32);
+    --main-bg-color-selected : rgba(256,256,256, 10%);
+    --main-brdr-color-default : rgb(32,32,32);
+    --main-txt-color-default : rgb(159, 159, 159);
+
+    --scroller-bg-color : #090909;
+    --scroller-scroll-color : #484848;
+
+    --color-blue : #1E90FF;
+    --color-red : #8B0000;
+    --color-green : #228B22;
+
+}

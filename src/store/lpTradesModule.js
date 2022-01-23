@@ -39,6 +39,31 @@ export const lpTradesModule = {
             // Получение всевозможных торговых позиций корпорации.
             let offers = await axiosESI.getCorpLPOffers(corp_id)
 
+            // Формирование массива type_id всех торговых элементов
+            let type_ids = offers.map((el)=>{
+                return el.type_id
+            })
+            offers.forEach((el)=>{
+                el.required_items.forEach((_el)=>{
+                    type_ids.push(_el.type_id)
+                })
+            })
+
+            // Запрос названий всех объектов с id = type_id
+            const names = await axiosESI.getNamesByIDs(type_ids)
+
+            // Добавление поля "name" всем объектам в offers offers[].required_items
+            offers.forEach((el)=>{
+                el['name'] = names.find((obj)=>{
+                    return obj.id === el.type_id
+                }).name
+                el.required_items.forEach((_el)=>{
+                    _el['name'] = names.find((obj)=>{
+                        return obj.id === _el.type_id
+                    }).name
+                })
+            })
+
             // Разделение всех оферов на торговые позиции(есть в маркете) и чертежи
             let blueprints = []
             let trades = offers.filter((el)=>{
@@ -106,32 +131,6 @@ export const lpTradesModule = {
             for(let el of trades){
                 el["isk_per_lp"] = (el.price * el.quantity /* * налог */ - el.isk_cost - el.required_items_price) / (el.lp_cost > 0 ? el.lp_cost : 1)
             }
-
-            // Формирование массива type_id всех торговых элементов
-            let type_ids = offers.map((el)=>{
-                return el.type_id
-            })
-            offers.forEach((el)=>{
-                el.required_items.forEach((_el)=>{
-                    type_ids.push(_el.type_id)
-                })
-            })
-
-            // Запрос названий всех объектов с id = type_id
-            const names = await axiosESI.getNamesByIDs(type_ids)
-
-            // Добавление поля "name" всем объектам в offers offers[].required_items
-            offers.forEach((el)=>{
-                el['name'] = names.find((obj)=>{
-                    return obj.id === el.type_id
-                }).name
-                el.required_items.forEach((_el)=>{
-                    _el['name'] = names.find((obj)=>{
-                        return obj.id === _el.type_id
-                    }).name
-                })
-            })
-
 
             commit('setTrades', trades)
             commit('setBlueprints', blueprints)

@@ -55,7 +55,7 @@ export default {
 <style>
 /* border settings */
 #table-npc-trades table,#table-npc-trades th,#table-npc-trades td{
-  border-color: rgb(32, 32, 32);
+  border-color: var(--main-brdr-color-default);
   border-width: 0 1px 0 0;
   border-style: solid;
   border-spacing: 0;
@@ -66,7 +66,7 @@ export default {
   left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
-  border: 1px solid rgb(32, 32, 32);
+  border: 1px solid var(--main-brdr-color-default);
 }
 /* scrollbar settings*/
 #table-npc-trades::-webkit-scrollbar{
@@ -86,11 +86,11 @@ export default {
   background: none;
 }
 #table-npc-trades tr{
-  background-color: rgb(21,21,21);
+  background-color: var(--main-bg-color-content);
 }
 
 #table-npc-trades tbody.content tr:hover{
-  background-color: rgb(32,32,32);
+  background-color: var(--main-bg-color-content-hover);
 }
 #table-npc-trades .col-1{
   width: 20%;
@@ -131,7 +131,7 @@ export default {
   left: 0;
   height: inherit;
   width: 100%;
-  background-color: rgb(21,21,21);
+  background-color: var(--main-bg-color-content);
   border-width: 0;
 }
 .table-empty{
