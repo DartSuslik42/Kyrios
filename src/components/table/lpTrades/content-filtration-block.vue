@@ -2,7 +2,7 @@
   <div>
     <div>
       <label>Select Filter</label>
-      <select v-model="selectedFilter">
+      <select v-model="selectedAvailableFilter">
         <option v-for="(filter, idx) in available_filters()" :key="idx" :value="filter">
           {{filter.title}}
         </option>
@@ -118,21 +118,28 @@ export default {
     return{
       selectedFilters : [],
       selectedFilter : null,
+      selectedAvailableFilter : null
     }
   },
   methods:{
     available_filters(){
-      return JSON.parse(JSON.stringify(filters))
+      return filters
     },
     addFilter(){
       this.selectedFilters.push(this.selectedFilter)
       this.selectedFilter = null
+      this.selectedAvailableFilter = null
     },
     removeFilter(filter){
       this.selectedFilters = this.selectedFilters.filter((obj)=>{
         return obj !== filter
       })
     },
+  },
+  watch : {
+    selectedAvailableFilter(newVal){
+      this.selectedFilter = JSON.parse(JSON.stringify(newVal))
+    }
   }
 }
 </script>
