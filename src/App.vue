@@ -4,7 +4,7 @@
     <div id="lp-trades">
       <h6 class="title">LP-Offers <a id="no-blueprints">NO BLUEPRINTS</a></h6>
       <table-lptrades :corp="this.selected" class="table"/>
-      <RecommendationOptionsList class="options"/>
+      <content-filtration-block/>
     </div>
   </div>
 </template>
@@ -13,10 +13,10 @@
 import SelectNpcCorporation from "components/select/npcCorporation/select-npcCorporation.vue"
 import {mapState, mapActions} from "vuex"
 import TableLptrades from "components/table/lpTrades/table-lpTrades.vue";
-import RecommendationOptionsList from "./components/table/lpTrades/RecommendationOptionsList.vue";
+import ContentFiltrationBlock from "./components/table/lpTrades/content-filtration-block.vue";
 export default {
   name: 'App',
-  components: {RecommendationOptionsList, TableLptrades, SelectNpcCorporation},
+  components: {ContentFiltrationBlock, TableLptrades, SelectNpcCorporation},
   data(){
     return{
       selected : null,
@@ -46,6 +46,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
+  margin: 0;
+  padding: 0;
   height: 100vh;
   width: 100vw;
   overflow: scroll;
@@ -54,6 +56,9 @@ export default {
 #lp-trades{
   padding: 5px;
   width: 80%;
+}
+*{
+  margin: 2px 0;
 }
 .selector {
   position: static;
@@ -70,9 +75,5 @@ export default {
   text-align: left;
   padding: 3px 0 9px 1px;
   font-size: 15px;
-}
-.options{
-  display: block;
-  margin: 4px;
 }
 </style>

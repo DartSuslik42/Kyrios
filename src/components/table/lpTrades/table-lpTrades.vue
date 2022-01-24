@@ -9,7 +9,7 @@
           <tr-trade-element v-for="(trade, idx) in trades" :key="idx" :trade="trade"/>
         </template>
       </tbody>
-      <tr-trade-element-empty class="table-empty"/>
+      <tr-trade-element-empty class="table-empty" v-show="loading"/>
     </table>
   </div>
 </template>
