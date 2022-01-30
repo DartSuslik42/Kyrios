@@ -40,15 +40,23 @@ export default {
   methods:{
     ...mapActions({
       fetchTrades : "lpTradesModule/fetchTrades",
-    })
-  },
-  watch:{
-    async corp(newVal){
+    }),
+    async fetchData(corp){
       this.loading = true
-      await this.fetchTrades(newVal?.id)
+      await this.fetchTrades(corp?.id)
       this.loading = false
     }
   },
+  watch:{
+    async corp(newVal){
+      await this.fetchData(newVal)
+    }
+  },
+  async created() {
+    if(this.corp != null){
+      await this.fetchData(this.corp)
+    }
+  }
 }
 </script>
 

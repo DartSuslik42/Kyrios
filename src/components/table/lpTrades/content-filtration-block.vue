@@ -20,13 +20,13 @@
     <div>
       <ul>
         <li v-for="(filter, idx) in selectedFilters" :key="idx">
-          {{filter}}
+          <label>{{filter.title}}</label>
           <button @click.prevent="removeFilter(filter)">Remove Filter</button>
         </li>
       </ul>
     </div>
     <div v-if="this.selectedFilters.length">
-      <button>Filter</button>
+      <button @click="filter">Filter</button>
     </div>
   </div>
 </template>
@@ -134,6 +134,9 @@ export default {
       this.selectedFilters = this.selectedFilters.filter((obj)=>{
         return obj !== filter
       })
+    },
+    filter(){
+      alert(JSON.stringify(this.selectedFilters))
     },
   },
   watch : {
