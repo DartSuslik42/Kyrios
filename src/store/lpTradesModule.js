@@ -52,7 +52,7 @@ export const lpTradesModule = {
             // Запрос названий всех объектов с id = type_id
             const names = await axiosESI.getNamesByIDs(type_ids)
 
-            // Добавление поля "name" всем объектам в offers offers[].required_items
+            // Добавление поля "name" всем объектам в offers[], offers[].required_items[]
             offers.forEach((el)=>{
                 el['name'] = names.find((obj)=>{
                     return obj.id === el.type_id
