@@ -21,6 +21,7 @@
     color: var(--main-txt-color-default);
     font-weight: bold;
     font-size: 10px;
+    cursor: default;
 }
 :root{
     --main-bg-color-default : rgb(3, 3, 3);

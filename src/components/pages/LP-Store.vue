@@ -43,7 +43,7 @@ export default {
   color: var(--color-blue)
 }
 #lp_store_block{
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
