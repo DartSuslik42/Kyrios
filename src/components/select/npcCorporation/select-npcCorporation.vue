@@ -14,7 +14,7 @@
       />
       <npc-corporations-list
           v-if="selectedFaction"
-          :corps="getFactionCorporations(selectedFaction.id)"
+          :corps="getCorps"
           :selected="value"
           @selected="corpSelected"
       />
@@ -52,13 +52,23 @@ export default {
     ...mapGetters({
       factions : "npcCorporationsModule/getFactions",
       getFactionCorporations : "npcCorporationsModule/getCorporations",
-    })
+      getCorpFaction : "npcCorporationsModule/getCorpFaction",
+    }),
+    getCorps(){
+      return this.getFactionCorporations(this.selectedFaction.id)
+    },
   },
   data(){
     return {
       selectedCorp : null,
       selectedFaction : null,
       showTable : false,
+    }
+  },
+  created() {
+    if(this.value){
+      this.selectedCorp = this.value
+      this.selectedFaction = this.getCorpFaction(this.value.id)
     }
   },
 }

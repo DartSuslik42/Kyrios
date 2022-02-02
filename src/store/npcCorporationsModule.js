@@ -21,7 +21,7 @@ export const npcCorporationsModule = {
         },
         getCorporation : state => corpID =>{
             return state.Corporations.find((element)=>{
-                return element.corporationID === corpID
+                return element.corporationID === Number(corpID)
             })
         },
         getCorporations : state => factionID =>{
@@ -76,16 +76,13 @@ export const npcCorporationsModule = {
                 }
             }
             commit('setFactionsCorps', rawFactionsCorps)
-            console.debug(rawFactionsCorps)
         },
         async fetchFactions({commit}){
             const a = await axiosESI.getFactions()
-            console.debug(a)
             commit('setFactions', a)
         },
         async fetchCorporations({commit}){
             const a = await axiosSDE.getCorporations()
-            console.debug(a)
             commit('setCorporations', a)
         },
     },

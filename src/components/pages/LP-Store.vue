@@ -3,7 +3,7 @@
     <select-npc-corporation :corps="FactionsCorps" v-model="selected" class="selector"/>
     <div id="lp-trades">
       <h6 class="title">LP-Offers <a id="no-blueprints">NO BLUEPRINTS</a></h6>
-      <table-lptrades :corp="this.selected" class="table"/>
+      <table-lptrades :corp="selected" class="table"/>
       <content-filtration-block/>
     </div>
   </div>
@@ -11,7 +11,7 @@
 
 <script>
 import SelectNpcCorporation from "components/select/npcCorporation/select-npcCorporation.vue"
-import {mapState, mapActions} from "vuex"
+import {mapState, mapActions, mapGetters} from "vuex"
 import TableLptrades from "components/table/lpTrades/table-lpTrades.vue";
 import ContentFiltrationBlock from "../table/lpTrades/content-filtration-block.vue";
 export default {
@@ -30,10 +30,32 @@ export default {
   computed:{
     ...mapState({
       FactionsCorps : "npcCorporationsModule/FactionsCorps"
-    })
+    }),
+    ...mapGetters({
+      getCorpFaction : "npcCorporationsModule/getCorpFaction",
+      getCorporation : "npcCorporationsModule/getCorporation",
+    }),
   },
   async created() {
     await this.fetchFactionsCorps()
+    // TODO : Ахтунг! Говнокод!
+    if(this.$route.params.corp_id){
+      const route_corpID = Number(this.$route.params.corp_id)
+      const faction = this.getCorpFaction(route_corpID)
+      const FactionCorp = this.$store.state.npcCorporationsModule.FactionsCorps.find((el)=>{
+        return el.Faction.id === faction.id
+      })
+      this.selected = FactionCorp.Corporations.find((el)=>{
+        return el.id === route_corpID
+      })
+    }
+  },
+  watch:{
+    selected(newVal){
+      if(newVal?.id !== this.$route.params.corp_id){
+          this.$router.push({ path: `/lp_store/${newVal.id}`})
+      }
+    }
   },
 }
 </script>
