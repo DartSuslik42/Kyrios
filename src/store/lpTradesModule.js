@@ -1,4 +1,5 @@
 import axiosESI from "./axiosESI.js";
+import axiosEVEMarketer from "./axiosEVEMarketer";
 // import axiosSDE from "./axiosSDE.js";
 // import LocalStorage from "./LocalStorage.js";
 export const lpTradesModule = {
@@ -7,24 +8,35 @@ export const lpTradesModule = {
         return{
             trades : [],
             blueprints : [],
+            mode : 'buy',
         }
     },
     getters:{
-        getTrades : state => () =>{
+        getTrades : state => () => {
             return state.trades
         },
-        // getCorpFaction : (state, getters) => (corpID) =>{
-        //     const Corporation = getters.getCorporation(corpID)
-        //     const Faction = getters.getFaction(Corporation.factionID)
-        //     if(Faction){
-        //         return {
-        //             id : Faction.faction_id,
-        //             name : Faction.name,
-        //         }
-        //     }else{
-        //         return null
-        //     }
-        // },
+        getTrade : state => (type_id) => {
+            return state.trades.find((obj)=>{
+                return obj.type_id === type_id
+            })
+        },
+        getTradePrice : (state) => (trade) => {
+            return trade.market_info[state.mode].weakAvg
+        },
+        getTradeTotalPrice : (state, getters) => (trade) => {
+            return getters.getTradePrice(trade) * trade.quantity
+        },
+        getTradeRequiredItemsPrice : () => (trade) => {
+            return trade.required_items.reduce((sum, el) => {
+                return sum + el.market_info['sell'].weakAvg * el.quantity
+            }, 0)
+        },
+        getTradeISK_per_LP : (state, getters) => (trade) => {
+            return (getters.getTradePrice(trade) * trade.quantity - trade.isk_cost - getters.getTradeRequiredItemsPrice(trade)) / (trade.lp_cost ? trade.lp_cost : 1)
+        },
+        getTradeDailyVolume : (state) => (trade) => {
+            return trade.market_info[state.mode].volume * 0.05
+        },
     },
     mutations:{
         setTrades(state, arg){
@@ -32,6 +44,13 @@ export const lpTradesModule = {
         },
         setBlueprints(state, arg){
             state.blueprints = arg
+        },
+        setMode(state, arg){
+            if( arg === 'sell' || arg === 'buy') {
+                state.mode = arg
+            }else {
+                console.error(`Ожидалось:'sell'|'buy', получено:${arg}`)
+            }
         }
     },
     actions: {
@@ -47,6 +66,11 @@ export const lpTradesModule = {
                 el.required_items.forEach((_el)=>{
                     type_ids.push(_el.type_id)
                 })
+            })
+
+            // Формирование массива уникальных type_id
+            type_ids = type_ids.filter((el, idx, arr)=>{
+                return arr.indexOf(el) === idx
             })
 
             // Запрос названий всех объектов с id = type_id
@@ -74,62 +98,17 @@ export const lpTradesModule = {
                 return true
             })
 
-            // Добавление поля "market_history"
-
-            // "market_history"[
-            //      {
-            //      "average":500000000.0,
-            //      "date":"2020-12-03",
-            //      "highest":500000000.0,
-            //      "lowest":500000000.0,
-            //      "order_count":1,
-            //      "volume":1
-            //      }
-            // ]
-            for(let el of trades){
-                const a = await axiosESI.getMarketPriceHistory(el.type_id, null)
-                if(a.length > 7){
-                    el["market_history"] = a.slice(-7)
-                }else{
-                    el["market_history"] = a
-                }
-            }
-
-            // Добавление поля "market_volume" - средний оборот товара за день
-            for(let el of trades){
-                const arr_market_volume = el.market_history.map((_el)=>{return _el.volume})
-                el["market_volume"] = arr_market_volume.reduce((sum, el) => sum + el, 0) / arr_market_volume.length
-            }
-
-            // Добавление информации о стоимости ордера и о стоимости предметов, необходимых для обмена
+            // Добавление поля "market_info"
+            const marketInfoArray = await axiosEVEMarketer.getMarketInfoOfArray(type_ids)
             for(let trade of trades) {
-                const marketOrders = await axiosESI.getMarketOrders(trade.type_id, undefined, "buy")
-                let price = 0
-                if(marketOrders?.length){
-                    price = marketOrders[0].price
-                }
-                trade["price"] = price
-
+                trade["market_info"] = marketInfoArray.find((obj)=>{
+                    return obj.type_id === trade.type_id
+                })
                 for(let item of trade.required_items){
-                    const marketOrders = await axiosESI.getMarketOrders(item.type_id, undefined, "sell")
-                    price = 0
-                    if(marketOrders?.length){
-                        price = marketOrders[0].price
-                    }
-                    item["price"] = price
+                    item["market_info"] = marketInfoArray.find((obj)=>{
+                        return obj.type_id === item.type_id
+                    })
                 }
-            }
-
-            // Добавление поля "required_items_price"
-            for(let trade of trades){
-                trade["required_items_price"]=trade.required_items.reduce((sum, el) => {
-                    return sum + el.price * el.quantity
-                }, 0)
-            }
-
-            // Добавление поля "isk_per_lp"
-            for(let el of trades){
-                el["isk_per_lp"] = (el.price * el.quantity /* * налог */ - el.isk_cost - el.required_items_price) / (el.lp_cost > 0 ? el.lp_cost : 1)
             }
 
             commit('setTrades', trades)

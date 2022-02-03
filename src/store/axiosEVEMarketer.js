@@ -6,7 +6,6 @@ const max_typeID_amount_per_request = 200
 
 class axiosEVEMarketer{
     async getMarketInfoOfArray(typeID_arr){
-        let return_var = []
         // Make typeID_arr of unique values
         typeID_arr = typeID_arr.filter((val, idx, arr) =>{
             return arr.indexOf(val) === idx
@@ -16,10 +15,14 @@ class axiosEVEMarketer{
         while (typeID_arr.length > 0) {
             arr_promise.push(this.getAxiosPromise(typeID_arr.splice(0, max_typeID_amount_per_request)))
         }
+
         const data = await Promise.all(arr_promise)
+
+        let return_var = []
         for(const data_element of data){
             return_var = return_var.concat(data_element.data)
         }
+
         return return_var
     }
 
