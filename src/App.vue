@@ -3,12 +3,12 @@
     <div id="app-header">
       <ul>
         <li>
-          <router-link :to="{ path : 'lp_store'}" class="router-link-content">
+          <router-link :to="{ path : '/lp_store'}" class="router-link-content">
               <label>LP-Store</label>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ path : 'foo'}" class="router-link-content">
+          <router-link :to="{ path : '/foo'}" class="router-link-content">
               <label>Foo</label>
           </router-link>
         </li>
