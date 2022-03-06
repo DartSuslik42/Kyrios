@@ -1,13 +1,14 @@
 import VueRouter from "vue-router";
 import LPStore from "../components/pages/LP-Store.vue"
-//TODO : remove foo
-const Foo = { template: '<div>foo</div>'}
+import BPStore from "../components/pages/BP-Store.vue"
+import MainPage from "../components/pages/BP-Store.vue"
 
 const routes = [
-    { path: '/', component: Foo },
-    { path: '/lp_store', component: LPStore },
-    { path: '/lp_store/:corp_id', component: LPStore },
-    { path: '/foo', component: Foo},
+    { path: '/', component: MainPage, redirect: '/home' },
+    { path: '/lp_store', component: LPStore , children : [
+            { path: ':corp_id(\\d+)', component: LPStore, alias : [':corp_id']}
+        ]},
+    { path: '/bp_store', component: BPStore},
 ]
 const router = new VueRouter({
     routes : routes,

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="app-header">
+    <header id="app-header">
       <ul>
         <li>
           <router-link :to="{ path : '/lp_store'}" class="router-link-content">
@@ -8,12 +8,12 @@
           </router-link>
         </li>
         <li>
-          <router-link :to="{ path : '/foo'}" class="router-link-content">
-              <label>Foo</label>
+          <router-link :to="{ path : '/bp_store'}" class="router-link-content">
+              <label>BP-Store</label>
           </router-link>
         </li>
       </ul>
-    </div>
+    </header>
     <div id="app-body">
       <router-view></router-view>
     </div>

@@ -42,6 +42,7 @@ export default {
       fetchTrades : "lpTradesModule/fetchTrades",
     }),
     async fetchData(corp){
+      if(!corp){this.loading = true; return;}
       this.loading = true
       await this.fetchTrades(corp?.id)
       this.loading = false
@@ -53,9 +54,7 @@ export default {
     }
   },
   async created() {
-    if(this.corp != null){
       await this.fetchData(this.corp)
-    }
   }
 }
 </script>
