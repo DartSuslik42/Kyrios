@@ -5,11 +5,11 @@
         <tr-trade-header/>
       </thead>
       <tbody class="content">
-        <template v-if="!loading">
+        <template v-if="!isEmpty">
           <tr-trade-element v-for="(trade, idx) in trades" :key="idx" :trade="trade"/>
         </template>
       </tbody>
-      <tr-trade-element-empty class="table-empty" v-show="loading"/>
+      <tr-trade-element-empty class="table-empty" v-show="isEmpty"/>
     </table>
   </div>
 </template>
@@ -18,43 +18,18 @@
 import TrTradeHeader from "./tr-trade-header.vue";
 import TrTradeElement from "./tr-trade-element.vue";
 import TrTradeElementEmpty from "./tr-trade-element-empty.vue";
-import {mapActions, mapState} from "vuex";
 export default {
   name: "table-lptrades",
   components: {TrTradeElementEmpty, TrTradeElement, TrTradeHeader},
   props: {
-    corp:{
-      default : null
-    }
-  },
-  data(){
-    return{
-      loading : true,
+    trades : {
+      default : [],
     }
   },
   computed:{
-    ...mapState({
-      trades : state => state.lpTradesModule.trades,
-    })
-  },
-  methods:{
-    ...mapActions({
-      fetchTrades : "lpTradesModule/fetchTrades",
-    }),
-    async fetchData(corp){
-      if(!corp){this.loading = true; return;}
-      this.loading = true
-      await this.fetchTrades(corp?.id)
-      this.loading = false
+    isEmpty(){
+      return !this.trades.length
     }
-  },
-  watch:{
-    async corp(newVal){
-      await this.fetchData(newVal)
-    }
-  },
-  async created() {
-      await this.fetchData(this.corp)
   }
 }
 </script>

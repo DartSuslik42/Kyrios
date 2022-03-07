@@ -3,7 +3,7 @@
     <select-npc-corporation :corps="FactionsCorps" v-model="corp" class="selector"/>
     <div id="lp-trades">
       <h6 class="title">LP-Offers <a id="no-blueprints">NO BLUEPRINTS</a></h6>
-      <table-lptrades :corp="corp" class="table"/>
+      <table-lptrades :trades="trades" class="table"/>
       <content-filtration-block/>
     </div>
   </div>
@@ -19,17 +19,19 @@ export default {
   components: {ContentFiltrationBlock, TableLptrades, SelectNpcCorporation},
   data(){
     return{
-      corp : null,
+      corp : undefined,
     }
   },
   methods:{
     ...mapActions({
-      fetchFactionsCorps : "npcCorporationsModule/fetchData"
+      fetchFactionsCorps : "npcCorporationsModule/fetchData",
+      fetchTrades : "lpTradesModule/fetchTrades",
     }),
   },
   computed:{
     ...mapState({
-      FactionsCorps : "npcCorporationsModule/FactionsCorps"
+      FactionsCorps : "npcCorporationsModule/FactionsCorps",
+      trades : state => state.lpTradesModule.trades,
     }),
     ...mapGetters({
       getCorpFaction : "npcCorporationsModule/getCorpFaction",
@@ -43,7 +45,7 @@ export default {
         () => this.$route.params,
         () => {
           const route_corpID = Number(this.$route.params.corp_id)
-          if(!route_corpID){ this.corp = null; return; }
+          if(!route_corpID){ this.corp = undefined; return; }
           if(this.corp?.id !== route_corpID){
             const faction = this.getCorpFaction(route_corpID)
             const FactionCorp = this.$store.state.npcCorporationsModule.FactionsCorps.find((el)=>{
@@ -58,11 +60,11 @@ export default {
     )
   },
   watch:{
-    corp(newVal){
-      if(!newVal){return}
-      if(newVal.id !== Number(this.$route.params.corp_id)){
-        this.$router.push({ path: `/lp_store/${newVal.id}`})
+    async corp(newVal){
+      if(!!newVal && newVal.id !== Number(this.$route.params.corp_id)){
+        await this.$router.push({path: `/lp_store/${newVal.id}`})
       }
+      await this.fetchTrades(!newVal ? undefined : newVal.id)
     }
   },
 }

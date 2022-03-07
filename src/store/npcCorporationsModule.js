@@ -38,7 +38,7 @@ export const npcCorporationsModule = {
                     name : Faction.name,
                 }
             }else{
-                return null
+                return undefined
             }
         }
     },

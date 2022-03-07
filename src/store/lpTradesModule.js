@@ -55,10 +55,17 @@ export const lpTradesModule = {
     },
     actions: {
         async fetchTrades({commit}, corp_id){
+            // Завершение выполнения, если corp_id не число
+            if(isNaN(corp_id)){
+                commit('setTrades', [])
+                commit('setBlueprints', [])
+                return
+            }
+
             // Получение всевозможных торговых позиций корпорации.
             let offers = await axiosESI.getCorpLPOffers(corp_id)
 
-            // Формирование массива type_id всех торговых элементов
+            // Формирование массива type_id всех элементов торговых позиций
             let type_ids = offers.map((el)=>{
                 return el.type_id
             })
@@ -66,11 +73,6 @@ export const lpTradesModule = {
                 el.required_items.forEach((_el)=>{
                     type_ids.push(_el.type_id)
                 })
-            })
-
-            // Формирование массива уникальных type_id
-            type_ids = type_ids.filter((el, idx, arr)=>{
-                return arr.indexOf(el) === idx
             })
 
             // Запрос названий всех объектов с id = type_id
