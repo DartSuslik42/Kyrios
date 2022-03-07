@@ -7,7 +7,7 @@
 
     <button v-else class="default text">
       <img-evetech :category="'corporations'" class="image"/>
-      <span id="content">NPC Corporation</span>
+      <span id="content">Chose NPC Corporation</span>
     </button>
   </div>
 </template>

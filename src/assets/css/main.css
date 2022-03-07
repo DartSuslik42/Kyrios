@@ -6,10 +6,10 @@
     background-color: var(--scroller-scroll-color);
 }
 ::-moz-selection { /* Code for Firefox */
-    background: var(--main-bg-color-selected);
+    background: none;
 }
 ::selection {
-    background: var(--main-bg-color-selected);
+    background: none;
 }
 *{
     background-color: var(--main-bg-color-default);
