@@ -20,7 +20,7 @@ class axiosEVEMarketer{
         const data = await Promise.all(arr_promise)
 
         let return_var = []
-        for(const data_element of data){
+        for(let data_element of data){
             return_var = return_var.concat(data_element.data)
         }
 

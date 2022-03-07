@@ -19,7 +19,7 @@ export default {
   components: {ContentFiltrationBlock, TableLptrades, SelectNpcCorporation},
   data(){
     return{
-      corp : undefined,
+      corp : null,
     }
   },
   methods:{
@@ -45,7 +45,10 @@ export default {
         () => this.$route.params,
         () => {
           const route_corpID = Number(this.$route.params.corp_id)
-          if(!route_corpID){ this.corp = undefined; return; }
+          if(!route_corpID){
+            this.corp = null
+            return
+          }
           if(this.corp?.id !== route_corpID){
             const faction = this.getCorpFaction(route_corpID)
             const FactionCorp = this.$store.state.npcCorporationsModule.FactionsCorps.find((el)=>{
@@ -64,7 +67,7 @@ export default {
       if(!!newVal && newVal.id !== Number(this.$route.params.corp_id)){
         await this.$router.push({path: `/lp_store/${newVal.id}`})
       }
-      await this.fetchTrades(!newVal ? undefined : newVal.id)
+      await this.fetchTrades(!newVal ? null : newVal.id)
     }
   },
 }

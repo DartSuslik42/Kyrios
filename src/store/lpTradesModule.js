@@ -56,7 +56,7 @@ export const lpTradesModule = {
     actions: {
         async fetchTrades({commit}, corp_id){
             // Завершение выполнения, если corp_id не число
-            if(isNaN(corp_id)){
+            if(typeof corp_id != 'number'){
                 commit('setTrades', [])
                 commit('setBlueprints', [])
                 return

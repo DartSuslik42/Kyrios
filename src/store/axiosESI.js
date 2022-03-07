@@ -29,10 +29,10 @@ class axiosESI {
 
                     data.forEach((el)=>{
                         let required_items = []
-                        for(const item of el.required_items){
+                        for(let item of el.required_items){
                             required_items.push(new LP_Type_Item({
-                                market_info: undefined,
-                                name: undefined,
+                                market_info: null,
+                                name: null,
                                 quantity: item.quantity,
                                 type_id: item.type_id
                             }))
@@ -41,8 +41,8 @@ class axiosESI {
                         array.push(new LP_Type_Trade({
                             isk_cost: el.isk_cost,
                             lp_cost: el.lp_cost,
-                            market_info: undefined,
-                            name: undefined,
+                            market_info: null,
+                            name: null,
                             quantity: el.quantity,
                             required_items: required_items,
                             type_id: el.type_id
