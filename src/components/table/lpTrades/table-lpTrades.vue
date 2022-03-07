@@ -1,5 +1,5 @@
 <template>
-  <div id="table-npc-trades">
+  <div id="table-npc-trades" ref="table_lpTrades">
     <table id="table-content">
       <thead>
         <tr-trade-header/>
@@ -26,11 +26,32 @@ export default {
       default : [],
     }
   },
+  data(){
+    return{
+      isMounted : false,
+    }
+  },
   computed:{
     isEmpty(){
       return !this.trades.length
     }
-  }
+  },
+  methods:{
+    scrollToTop(){
+      if(this.isMounted){
+        this.$refs.table_lpTrades.scrollTo(0,0)
+      }
+    }
+  },
+  watch:{
+    trades(){
+      this.scrollToTop()
+    }
+  },
+  mounted() {
+    this.isMounted = true
+  },
+
 }
 </script>
 
