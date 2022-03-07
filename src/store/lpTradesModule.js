@@ -78,13 +78,13 @@ export const lpTradesModule = {
             // Запрос названий всех объектов с id = type_id
             const names = await axiosESI.getNamesByIDs(type_ids)
 
-            // Добавление поля "name" всем объектам в offers[], offers[].required_items[]
+            // Инициализация поля "name" всем объектам в offers[], offers[].required_items[]
             offers.forEach((el)=>{
-                el['name'] = names.find((obj)=>{
+                el.name = names.find((obj)=>{
                     return obj.id === el.type_id
                 }).name
                 el.required_items.forEach((_el)=>{
-                    _el['name'] = names.find((obj)=>{
+                    _el.name = names.find((obj)=>{
                         return obj.id === _el.type_id
                     }).name
                 })
@@ -100,14 +100,14 @@ export const lpTradesModule = {
                 return true
             })
 
-            // Добавление поля "market_info"
+            // Инициализация поля "market_info"
             const marketInfoArray = await axiosEVEMarketer.getMarketInfoOfArray(type_ids)
             for(let trade of trades) {
-                trade["market_info"] = marketInfoArray.find((obj)=>{
+                trade.market_info = marketInfoArray.find((obj)=>{
                     return obj.type_id === trade.type_id
                 })
                 for(let item of trade.required_items){
-                    item["market_info"] = marketInfoArray.find((obj)=>{
+                    item.market_info = marketInfoArray.find((obj)=>{
                         return obj.type_id === item.type_id
                     })
                 }

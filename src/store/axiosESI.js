@@ -1,4 +1,5 @@
 import axios from "axios"
+import {LP_Type_Trade, LP_Type_Item} from "../model/Trade";
 
 class axiosESI {
     // async getNPCCorpsIDs(){
@@ -21,7 +22,36 @@ class axiosESI {
 
     async getCorpLPOffers(corpID){
         const promise = await axios
-            .get('https://esi.evetech.net/latest/loyalty/stores/'+ corpID +'/offers/?datasource=tranquility')
+            .get('https://esi.evetech.net/latest/loyalty/stores/'+ corpID +'/offers/?datasource=tranquility', {
+                transformResponse(data){
+                    data = JSON.parse(data)
+                    let array = []
+
+                    data.forEach((el)=>{
+                        let required_items = []
+                        for(const item of el.required_items){
+                            required_items.push(new LP_Type_Item({
+                                market_info: undefined,
+                                name: undefined,
+                                quantity: item.quantity,
+                                type_id: item.type_id
+                            }))
+                        }
+
+                        array.push(new LP_Type_Trade({
+                            isk_cost: el.isk_cost,
+                            lp_cost: el.lp_cost,
+                            market_info: undefined,
+                            name: undefined,
+                            quantity: el.quantity,
+                            required_items: required_items,
+                            type_id: el.type_id
+                        }))
+                    })
+                    return array
+                }
+
+            })
             .catch(error => console.log(error))
         return promise.data
     }

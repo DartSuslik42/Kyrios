@@ -1,5 +1,6 @@
 import axios from "axios";
 const qs = require('qs')
+import {MarketInfo, MarketTypeInfo} from "../model/MarketInfo";
 
 const system_id = 30000142
 const max_typeID_amount_per_request = 200
@@ -32,51 +33,33 @@ class axiosEVEMarketer{
             method: 'get',
             transformResponse: [function (data) {
                 let ret = []
-                const _data = JSON.parse(data)
-                for (const item of _data) {
-                    ret.push({
+                data = JSON.parse(data)
+                for (const item of data) {
+                    ret.push(new MarketInfo({
                         type_id: item.buy.forQuery.types[0],
-                        buy: {
-                            // volume: Volume of buy or sell orders
+                        buy: new MarketTypeInfo({
                             volume: item.buy.volume,
-                            // avg: Average buy or sell price
                             avg: item.buy.avg,
-                            // weakAvg : Week average buy or sell price
                             weakAvg: item.buy.wavg,
-                            // max: Maximum buy or sell price
                             max: item.buy.max,
-                            // min: Minimum buy or sell price
                             min: item.buy.min,
-                            // stdDev: Standard deviation of buy or sell prices
                             stdDev: item.buy.stdDev,
-                            // median: Median buy or sell price
                             median: item.buy.median,
-                            // percentile: 95th percentile buy or sell price
                             percentile: item.buy.fivePercent,
-                            // variance: ???
                             variance: item.buy.variance,
-                        },
-                        sell: {
-                            // volume: Volume of buy or sell orders
+                        }),
+                        sell: new MarketTypeInfo({
                             volume: item.sell.volume,
-                            // avg: Average buy or sell price
                             avg: item.sell.avg,
-                            // weakAvg : Week average buy or sell price
                             weakAvg: item.sell.wavg,
-                            // max: Maximum buy or sell price
                             max: item.sell.max,
-                            // min: Minimum buy or sell price
                             min: item.sell.min,
-                            // stdDev: Standard deviation of buy or sell prices
                             stdDev: item.sell.stdDev,
-                            // median: Median buy or sell price
                             median: item.sell.median,
-                            // percentile: 95th percentile buy or sell price
                             percentile: item.sell.fivePercent,
-                            // variance: ???
                             variance: item.sell.variance,
-                        }
-                    })
+                        })
+                    }))
                 }
                 return ret
             }],
