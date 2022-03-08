@@ -22,18 +22,18 @@
     </td>
     <td class="col-5">
       <a v-if="this.trade.required_items.length">
-        {{$format.EVE_number(this.required_items_price(this.trade))}} ISK
+        {{$format.EVE_number(this.required_items_price)}} ISK
       </a>
     </td>
     <td class="col-6">
-       {{$format.EVE_number(this.price_total(this.trade))}} ISK
+       {{$format.EVE_number(this.price_total)}} ISK
     </td>
     <td class="col-7">
-      {{$format.EVE_number(this.daily_volume(this.trade))}}
+      {{$format.EVE_number(this.daily_volume)}}
     </td>
     <td class="col-8">
-      <a :class="{green : this.isk_per_lp(this.trade) > 0, red : this.isk_per_lp(this.trade) < 0 }">
-        {{$format.EVE_number(this.isk_per_lp(this.trade))}}
+      <a :class="{green : this.isk_per_lp > 0, red : this.isk_per_lp < 0 }">
+        {{$format.EVE_number(this.isk_per_lp)}}
       </a>
     </td>
   </tr>
@@ -41,23 +41,34 @@
 <script>
 import Item_Amount_Element from "./Item_Amount_Element.vue";
 import {mapGetters} from "vuex";
+import {LP_Type_Trade} from "../../../model/Trade";
+
 export default {
   name: "tr-trade-element",
   components: {Item_Amount_Element},
   props : {
     trade : {
       required : true,
+      type : LP_Type_Trade,
     }
   },
   computed:{
     ...mapGetters({
-      price : "lpTradesModule/getTradePrice",
-      price_total : "lpTradesModule/getTradeTotalPrice",
-      required_items_price : "lpTradesModule/getTradeRequiredItemsPrice",
-      daily_volume : "lpTradesModule/getTradeDailyVolume",
-      isk_per_lp : "lpTradesModule/getTradeISK_per_LP",
-    })
-  }
+      mode : "lpTradesModule/getMode",
+    }),
+    price_total(){
+      return this.trade.getTotalItemPrice({mode : this.mode})
+    },
+    required_items_price(){
+      return this.trade.getRequiredItemsPrice()
+    },
+    daily_volume(){
+      return this.trade.getDailyVolume({mode : this.mode})
+    },
+    isk_per_lp(){
+      return this.trade.getISK_per_LP({mode : this.mode})
+    }
+  },
 }
 </script>
 

@@ -3,8 +3,8 @@
     <select-npc-corporation :corps="FactionsCorps" v-model="corp" class="selector"/>
     <div id="lp-trades">
       <h6 class="title">LP-Offers <a id="no-blueprints">NO BLUEPRINTS</a></h6>
-      <table-lptrades :trades="trades" class="table"/>
-      <content-filtration-block/>
+      <table-lptrades :trades="filteredTrades" class="table"/>
+      <content-filtration-block v-on:update:filters="(input)=>{this.filters = input}"/>
     </div>
   </div>
 </template>
@@ -20,6 +20,7 @@ export default {
   data(){
     return{
       corp : null,
+      filters : [],
     }
   },
   methods:{
@@ -36,7 +37,17 @@ export default {
     ...mapGetters({
       getCorpFaction : "npcCorporationsModule/getCorpFaction",
       getCorporation : "npcCorporationsModule/getCorporation",
+      mode : "lpTradesModule/getMode",
     }),
+    filteredTrades(){
+      let filteredTrades = this.trades
+      this.filters.forEach((filter)=>{
+        filteredTrades = filteredTrades.filter((trade)=>{
+          return  filter.filter_function({trade : trade, mode : this.mode})
+        })
+      })
+      return filteredTrades
+    }
   },
   async created() {
     await this.fetchFactionsCorps()

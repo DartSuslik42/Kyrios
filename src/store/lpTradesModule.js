@@ -1,7 +1,5 @@
 import axiosESI from "./axiosESI.js";
 import axiosEVEMarketer from "./axiosEVEMarketer";
-// import axiosSDE from "./axiosSDE.js";
-// import LocalStorage from "./LocalStorage.js";
 export const lpTradesModule = {
     namespaced : true,
     state(){
@@ -12,31 +10,14 @@ export const lpTradesModule = {
         }
     },
     getters:{
-        getTrades : state => () => {
-            return state.trades
-        },
         getTrade : state => (type_id) => {
             return state.trades.find((obj)=>{
                 return obj.type_id === type_id
             })
         },
-        getTradePrice : (state) => (trade) => {
-            return trade.market_info[state.mode].weakAvg
-        },
-        getTradeTotalPrice : (state, getters) => (trade) => {
-            return getters.getTradePrice(trade) * trade.quantity
-        },
-        getTradeRequiredItemsPrice : () => (trade) => {
-            return trade.required_items.reduce((sum, el) => {
-                return sum + el.market_info['sell'].weakAvg * el.quantity
-            }, 0)
-        },
-        getTradeISK_per_LP : (state, getters) => (trade) => {
-            return (getters.getTradePrice(trade) * trade.quantity - trade.isk_cost - getters.getTradeRequiredItemsPrice(trade)) / (trade.lp_cost ? trade.lp_cost : 1)
-        },
-        getTradeDailyVolume : (state) => (trade) => {
-            return trade.market_info[state.mode].volume * 0.05
-        },
+        getMode : state => {
+            return state.mode
+        }
     },
     mutations:{
         setTrades(state, arg){
@@ -49,7 +30,7 @@ export const lpTradesModule = {
             if( arg === 'sell' || arg === 'buy') {
                 state.mode = arg
             }else {
-                console.error(`Ожидалось:'sell'|'buy', получено:${arg}`)
+                console.warn(`Ожидалось:'sell'|'buy', получено:${arg}`)
             }
         }
     },
@@ -66,10 +47,9 @@ export const lpTradesModule = {
             let offers = await axiosESI.getCorpLPOffers(corp_id)
 
             // Формирование массива type_id всех элементов торговых позиций
-            let type_ids = offers.map((el)=>{
-                return el.type_id
-            })
+            let type_ids = []
             offers.forEach((el)=>{
+                type_ids.push(el.type_id)
                 el.required_items.forEach((_el)=>{
                     type_ids.push(_el.type_id)
                 })

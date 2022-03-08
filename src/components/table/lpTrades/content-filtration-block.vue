@@ -25,100 +25,19 @@
         </li>
       </ul>
     </div>
-    <div v-if="this.selectedFilters.length">
-      <button @click="filter">Filter</button>
-    </div>
   </div>
 </template>
 
 <script>
-const filters = Object.freeze({
-  isk_per_lp : {
-    title : "ISK/LP",
-    fields : {
-      min_isk : {
-        type : "number",
-        title : "MIN ISK/LP",
-        value : "0",
-      },
-    },
-    filter_function : function(isk_per_lp){
-      return isk_per_lp >= this.fields.min_isk.value
-    },
-  },
-  volume : {
-    title : "Daily Volume",
-    fields : {
-      min_volume : {
-        type : "number",
-        title : "MIN volume",
-        value : "0",
-      },
-      min_taken_volume : {
-        type : "number",
-        title : "MIN taken daily volume",
-        value : "1",
-      },
-    },
-    filter_function : function(volume){
-      if(volume < this.fields.min_volume.value){
-        return false
-      }
-      return volume * (this.fields.min_taken_volume.value) >= 1
-    },
-  },
-  total_isk : {
-    title : "Total ISK",
-    fields : {
-      isk_owned : {
-        type : "number",
-        title : "Total owned ISK",
-        value : "0",
-      },
-    },
-    filter_function : function(isk_amount){
-      return isk_amount <= this.fields.isk_owned.value
-    },
-  },
-  total_lp : {
-    title : "Total LP",
-    fields : {
-      min_lp : {
-        type: "number",
-        title: "Total owned LP",
-        value: "0",
-      },
-    },
-    filter_function : function(lp_amount){
-      return lp_amount <= this.fields.min_lp.value
-    },
-  },
-  other_requirements : {
-    title : "Other Requirements",
-    fields : {
-      hasOtherRequirements : {
-        type : "checkbox",
-        title : "Has other Requirements",
-        value : true,
-      },
-    },
-    filter_function : function(other_requirements_array_length){
-      const num = Number(other_requirements_array_length)
-      if(this.fields.hasOtherRequirements.value){
-          return num > 0
-      }else{
-          return num <= 0
-      }
-    },
-  },
-})
+import {filters} from "../../../model/LPTradesFilters";
+
 export default {
   name: "content-filtration-block",
   data(){
     return{
       selectedFilters : [],
       selectedFilter : null,
-      selectedAvailableFilter : null
+      selectedAvailableFilter : null,
     }
   },
   methods:{
@@ -134,16 +53,22 @@ export default {
       this.selectedFilters = this.selectedFilters.filter((obj)=>{
         return obj !== filter
       })
+      this.emitFiltersUpdate()
     },
-    filter(){
-      alert(JSON.stringify(this.selectedFilters))
-    },
+    emitFiltersUpdate(){
+      this.$emit("update:filters", this.selectedFilters)
+    }
   },
   watch : {
     selectedAvailableFilter(newVal){
-      this.selectedFilter = JSON.parse(JSON.stringify(newVal))
-    }
-  }
+      if(newVal) {
+        this.selectedFilter = newVal.clone()
+      }
+    },
+  },
+  mounted() {
+    this.emitFiltersUpdate()
+  },
 }
 </script>
 
