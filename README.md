@@ -1,23 +1,18 @@
-# kyrios
+# Kyrios
 
-## Project setup
+Аналогом этого SPA являюется https://www.fuzzwork.co.uk/lpstore/.
+<p>
+  Функционал прост: используя стороннее API вывести игроку информацию о торговых LP-ордерах различных NPC-корпораций, просчитать возможную получаемую выгоду и составить оптимальный план скупки LP-ордеров основываясь на предпочтениях игрока.
+</p>
+
+## Если скачиваете репозиторий впервые, то пропишите следующую команду. Она скачивает пол-интернета, но без этого проект не запустится.
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Эта команда скомпилирует проект и запустит его на webpack-dev-server. 
 ```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
+yarn start
 ```
 
 ### Customize configuration
