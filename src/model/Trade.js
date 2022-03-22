@@ -47,7 +47,10 @@ class LP_Type_Trade extends LP_Type_Item{
         }, 0)
     }
     getISK_per_LP({mode}){
-       return (this.getTotalItemPrice({mode}) - this.isk_cost - this.getRequiredItemsPrice()) / (this.lp_cost ? this.lp_cost : 1)
+       return (
+           (this.getTotalItemPrice({mode}) - this.isk_cost - this.getRequiredItemsPrice()) /
+           (this.lp_cost ? this.lp_cost : 1)
+       )
     }
 }
 export {LP_Type_Trade, LP_Type_Item}

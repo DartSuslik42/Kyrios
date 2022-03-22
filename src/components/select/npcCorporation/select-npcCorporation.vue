@@ -1,5 +1,5 @@
 <template>
-  <div class="selector">
+  <div class="npc-corporation-selector">
     <npc-corporation-selected class="content"
         :corp="value"
         @click="()=>{this.showTable = true}"
@@ -74,6 +74,12 @@ export default {
 }
 </script>
 
+<style>
+.npc-corporation-selector button{
+  color: inherit;
+  background-color: inherit;
+}
+</style>
 <style scoped>
 .content{
   position: relative;
@@ -86,7 +92,7 @@ export default {
   top: 0;
   left: 0;
 }
-.selector{
+.npc-corporation-selector{
   position: relative;
   top: 0;
   left: 0;

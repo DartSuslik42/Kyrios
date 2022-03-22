@@ -57,7 +57,7 @@ export default {
       mode : "lpTradesModule/getMode",
     }),
     price_total(){
-      return this.trade.getTotalItemPrice({mode : this.mode})
+      return this.trade.getSingleItemPrice({mode : this.mode})
     },
     required_items_price(){
       return this.trade.getRequiredItemsPrice()
@@ -74,7 +74,7 @@ export default {
 
 <style scoped>
 *{
-  background-color: inherit;
+  background-color: transparent;
 }
 .list_required_items{
   list-style-type : none;

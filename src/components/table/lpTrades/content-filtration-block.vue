@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="contentFiltrationBlock">
     <div>
       <label>Select Filter</label>
       <select v-model="selectedAvailableFilter">
@@ -72,6 +72,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.contentFiltrationBlock, .contentFiltrationBlock *{
+  color: inherit;
+  background-color: inherit;
+}
 </style>

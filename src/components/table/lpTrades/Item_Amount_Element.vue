@@ -29,9 +29,8 @@ export default {
 .name{
   text-align: left;
   text-overflow: fade;
-  min-width: 0;
   overflow: hidden;
-  flex: 1 1 10px
+  flex: 1 1 10px;
 }
 .amount{
   text-align: right;

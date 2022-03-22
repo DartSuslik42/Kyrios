@@ -2,9 +2,9 @@
   <div id="lp_store_block">
     <select-npc-corporation :corps="FactionsCorps" v-model="corp" class="selector"/>
     <div id="lp-trades">
-      <h6 class="title">LP-Offers <a id="no-blueprints">NO BLUEPRINTS</a></h6>
+      <h6 class="title">LP-Offers <a>NO BLUEPRINTS</a></h6>
       <table-lptrades :trades="filteredTrades" class="table"/>
-      <content-filtration-block v-on:update:filters="(input)=>{this.filters = input}"/>
+      <content-filtration-block v-on:update:filters="(input)=>{this.filters = input}" class="filter"/>
     </div>
   </div>
 </template>
@@ -85,7 +85,10 @@ export default {
 </script>
 
 <style scoped>
-#no-blueprints{
+*{
+  color: var(--main-txt-color-default);
+}
+.title a{
   color: var(--color-blue)
 }
 #lp_store_block{
@@ -107,7 +110,7 @@ export default {
   position: static;
   top: 0;
   left: 0;
-  background-color: var(--main-bg-color-content);
+  background-color: var(--main-bg-color-default);
 }
 .table{
   position: static;
@@ -118,5 +121,8 @@ export default {
   text-align: left;
   padding: 3px 0 9px 1px;
   font-size: 15px;
+}
+.filter{
+  background-color: var(--main-bg-color-content);
 }
 </style>

@@ -20,5 +20,6 @@ export default {
 <style scoped>
 *{
   background-color: inherit;
+  height: inherit;
 }
 </style>

@@ -2,14 +2,14 @@
   <div id="table-npc-trades" ref="table_lpTrades">
     <table id="table-content">
       <thead>
-        <tr-trade-header/>
+        <tr-trade-header class="tr-header"/>
       </thead>
       <tbody class="content">
         <template v-if="!isEmpty">
-          <tr-trade-element v-for="(trade, idx) in trades" :key="idx" :trade="trade"/>
+          <tr-trade-element v-for="(trade, idx) in trades" :key="idx" :trade="trade" class="tr-body"/>
         </template>
+        <tr-trade-element-empty class="tr-body-empty"/>
       </tbody>
-      <tr-trade-element-empty class="table-empty" v-show="isEmpty"/>
     </table>
   </div>
 </template>
@@ -75,7 +75,6 @@ export default {
 #table-npc-trades::-webkit-scrollbar{
   display: none;
 }
-
 #table-npc-trades th{
   padding: 5px 5px 3px 5px;
   position: sticky;
@@ -83,17 +82,16 @@ export default {
   border-bottom-width: 1px;
   background-color: inherit;
 }
-#table-npc-trades td{
+#table-npc-trades .tr-body td{
   border-width: 0 1px 0 0;
   padding: 5px 5px;
   background: none;
 }
-#table-npc-trades tr{
-  background-color: var(--main-bg-color-content);
+#table-npc-trades th:last-child, #table-npc-trades td:last-child{
+  border-right-width: 0;
 }
-
-#table-npc-trades tbody.content tr:hover{
-  background-color: var(--main-bg-color-content-hover);
+#table-npc-trades tbody.content tr:not(.tr-body-empty):hover{
+  background-color: var(--main-bg-color-content-hover-a);
 }
 #table-npc-trades .col-1{
   width: 20%;
@@ -124,7 +122,6 @@ export default {
 #table-npc-trades .col-8{
   text-align: right;
   width: 10%;
-  border-right-width: 0;
 }
 </style>
 <style scoped>
@@ -134,10 +131,15 @@ export default {
   left: 0;
   height: inherit;
   width: 100%;
+  table-layout: fixed;
+  empty-cells: show;
   background-color: var(--main-bg-color-content);
   border-width: 0;
 }
-.table-empty{
-  height: inherit;
+.tr-body{
+  height: 0;
+}
+.tr-header{
+  background-color: var(--main-bg-color-content);
 }
 </style>
