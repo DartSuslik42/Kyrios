@@ -32,7 +32,7 @@ export const lpTradesModule = {
             }else {
                 console.warn(`Ожидалось:'sell'|'buy', получено:${arg}`)
             }
-        }
+        },
     },
     actions: {
         async fetchTrades({commit}, corp_id){

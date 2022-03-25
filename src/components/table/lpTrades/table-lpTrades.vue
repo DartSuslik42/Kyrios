@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import TrTradeHeader from "./tr-trade-header.vue";
+import TrTradeHeader from "./header/tr-trade-header.vue";
 import TrTradeElement from "./tr-trade-element.vue";
 import TrTradeElementEmpty from "./tr-trade-element-empty.vue";
 export default {
@@ -34,14 +34,14 @@ export default {
   computed:{
     isEmpty(){
       return !this.trades.length
-    }
+    },
   },
   methods:{
     scrollToTop(){
       if(this.isMounted){
         this.$refs.table_lpTrades.scrollTo(0,0)
       }
-    }
+    },
   },
   watch:{
     trades(){
