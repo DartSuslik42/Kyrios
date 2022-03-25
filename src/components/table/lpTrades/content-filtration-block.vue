@@ -30,7 +30,7 @@
 
 <script>
 import {filters} from "../../../model/LPTradesFilters";
-
+import {mapMutations} from "vuex"
 export default {
   name: "content-filtration-block",
   data(){
@@ -56,8 +56,11 @@ export default {
       this.emitFiltersUpdate()
     },
     emitFiltersUpdate(){
-      this.$emit("update:filters", this.selectedFilters)
-    }
+      this.setFilters(this.selectedFilters)
+    },
+    ...mapMutations({
+      setFilters : "lpTradesModule/setFilters",
+    }),
   },
   watch : {
     selectedAvailableFilter(newVal){

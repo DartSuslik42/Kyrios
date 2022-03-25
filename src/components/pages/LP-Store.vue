@@ -4,7 +4,7 @@
     <div id="lp-trades">
       <h6 class="title">LP-Offers <a>NO BLUEPRINTS</a></h6>
       <table-lptrades :trades="filteredTrades" class="table"/>
-      <content-filtration-block v-on:update:filters="(input)=>{this.filters = input}" class="filter"/>
+      <content-filtration-block class="filter"/>
     </div>
   </div>
 </template>
@@ -20,7 +20,6 @@ export default {
   data(){
     return{
       corp : null,
-      filters : [],
     }
   },
   methods:{
@@ -38,16 +37,8 @@ export default {
       getCorpFaction : "npcCorporationsModule/getCorpFaction",
       getCorporation : "npcCorporationsModule/getCorporation",
       mode : "lpTradesModule/getMode",
+      filteredTrades : "lpTradesModule/getTrades",
     }),
-    filteredTrades(){
-      let filteredTrades = this.trades
-      this.filters.forEach((filter)=>{
-        filteredTrades = filteredTrades.filter((trade)=>{
-          return  filter.filter_function({trade : trade, mode : this.mode})
-        })
-      })
-      return filteredTrades
-    }
   },
   async created() {
     await this.fetchFactionsCorps()

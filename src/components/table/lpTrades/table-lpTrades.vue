@@ -23,7 +23,7 @@ export default {
   components: {TrTradeElementEmpty, TrTradeElement, TrTradeHeader},
   props: {
     trades : {
-      default : [],
+      default(){return [] },
     }
   },
   data(){

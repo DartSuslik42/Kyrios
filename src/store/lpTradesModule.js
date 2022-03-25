@@ -1,5 +1,6 @@
 import axiosESI from "./axiosESI.js";
 import axiosEVEMarketer from "./axiosEVEMarketer";
+import {TradeFilter} from "../model/Filter";
 export const lpTradesModule = {
     namespaced : true,
     state(){
@@ -7,6 +8,7 @@ export const lpTradesModule = {
             trades : [],
             blueprints : [],
             mode : 'buy',
+            filters : [],
         }
     },
     getters:{
@@ -15,9 +17,21 @@ export const lpTradesModule = {
                 return obj.type_id === type_id
             })
         },
+        getFilteredTrades : state => {
+            let filteredTrades = state.trades
+            state.filters.forEach((filter)=>{
+                filteredTrades = filteredTrades.filter((trade)=>{
+                    return  filter.filter_function({trade : trade, mode : state.mode})
+                })
+            })
+            return filteredTrades
+        },
+        getTrades : (state, getters) => {
+            return getters.getFilteredTrades
+        },
         getMode : state => {
             return state.mode
-        }
+        },
     },
     mutations:{
         setTrades(state, arg){
@@ -30,9 +44,19 @@ export const lpTradesModule = {
             if( arg === 'sell' || arg === 'buy') {
                 state.mode = arg
             }else {
-                console.warn(`Ожидалось:'sell'|'buy', получено:${arg}`)
+                console.error(`Ожидалось:'sell'|'buy', получено:${arg}`)
             }
         },
+        setFilters(state, arg){
+            // null & undefined check
+            if(!(arg instanceof Array)) console.error(`Expected Array of ${TradeFilter}. Got ${arg}.`)
+
+            // Array of Wrong Type check
+            const a = arg.find(el => !(el instanceof TradeFilter))
+            if(a) console.error(`Expected ${TradeFilter}. Got ${a}.`)
+
+            state.filters = arg
+        }
     },
     actions: {
         async fetchTrades({commit}, corp_id){
