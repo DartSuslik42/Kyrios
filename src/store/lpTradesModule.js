@@ -9,25 +9,31 @@ export const lpTradesModule = {
             blueprints : [],
             mode : 'buy',
             filters : [],
+            sortingFunction : null,
+            isFetched : false,
         }
     },
     getters:{
-        getTrade : state => (type_id) => {
-            return state.trades.find((obj)=>{
-                return obj.type_id === type_id
-            })
-        },
-        getFilteredTrades : state => {
-            let filteredTrades = state.trades
-            state.filters.forEach((filter)=>{
-                filteredTrades = filteredTrades.filter((trade)=>{
-                    return  filter.filter_function({trade : trade, mode : state.mode})
+        FilterTrades : (state) => (trades) =>{
+            state.filters.forEach((filter) => {
+                trades = trades.filter((trade) => {
+                    return filter.filter_function({trade: trade, mode: state.mode})
                 })
             })
-            return filteredTrades
+            return trades
+        },
+        OrderTrades : (state) => (trades) => {
+            if(state.sortingFunction){ return trades.sort(state.sortingFunction) }
+            return trades
         },
         getTrades : (state, getters) => {
-            return getters.getFilteredTrades
+            let trades = [...state.trades]
+            // Filtering
+            trades = getters.FilterTrades(trades)
+            // Sorting
+            trades = getters.OrderTrades(trades)
+
+            return trades
         },
         getMode : state => {
             return state.mode
@@ -49,21 +55,41 @@ export const lpTradesModule = {
         },
         setFilters(state, arg){
             // null & undefined check
-            if(!(arg instanceof Array)) console.error(`Expected Array of ${TradeFilter}. Got ${arg}.`)
+            if(!(arg instanceof Array)) {
+                console.error(`Expected Array of ${TradeFilter}. Got ${arg}.`)
+                return
+            }
 
             // Array of Wrong Type check
             const a = arg.find(el => !(el instanceof TradeFilter))
-            if(a) console.error(`Expected ${TradeFilter}. Got ${a}.`)
+            if(a) {
+                console.error(`Expected ${TradeFilter}. Got ${a}.`)
+                return
+            }
 
             state.filters = arg
+        },
+        setSortingFunction(state, arg){
+            // Wrong Type check
+            if(typeof arg !== "function"){
+                console.error(`Expected function. Got ${typeof arg}`)
+                return
+            }
+
+            state.sortingFunction = arg
+        },
+        setIsFetched(state, arg){
+            state.isFetched = arg
         }
     },
     actions: {
         async fetchTrades({commit}, corp_id){
+            commit("setIsFetched", false)
             // Завершение выполнения, если corp_id не число
             if(typeof corp_id != 'number'){
                 commit('setTrades', [])
                 commit('setBlueprints', [])
+                commit("setIsFetched", true)
                 return
             }
 
@@ -119,6 +145,7 @@ export const lpTradesModule = {
 
             commit('setTrades', trades)
             commit('setBlueprints', blueprints)
+            commit("setIsFetched", true)
         },
     },
 }
