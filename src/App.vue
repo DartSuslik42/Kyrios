@@ -3,13 +3,18 @@
     <header id="app-header">
       <ul>
         <li>
-          <router-link :to="{ path : '/lp_store'}" class="router-link-content">
+          <router-link tag="li" :to="{ path : '/lp_store'}" class="router-link-content">
               <label>LP-Store</label>
           </router-link>
         </li>
         <li>
-          <router-link :to="{ path : '/bp_store'}" class="router-link-content">
+          <router-link tag="li" :to="{ path : '/bp_store'}" class="router-link-content">
               <label>BP-Store</label>
+          </router-link>
+        </li>
+        <li>
+          <router-link tag="li" :to="{ path : '/home'}" class="router-link-content">
+            <label>About us</label>
           </router-link>
         </li>
       </ul>
@@ -28,11 +33,17 @@ export default {
 
 <style scoped>
 #app-body{
+  display: flex;
+  align-self: stretch;
   width: 100%;
-  height: calc(100% - 7vh);
 }
 #app{
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: flex-start;
   top: 0;
   left: 0;
   margin: 0;
@@ -47,7 +58,9 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 7vh;
+  background-color: var(--main-bg-color-default);
+  border-bottom: 1px solid var(--main-brdr-color-default);
+  color: var(--main-txt-color-default);
 }
 #app-header ul{
   height: 100%;
@@ -60,13 +73,18 @@ export default {
 }
 #app-header li{
   display: flex;
-  flex : 0 1 100px;
   align-items: center;
   justify-content: center;
+  height: max-content;
+}
+li.router-link-active{
+  background-color: var(--main-brdr-color-default);
 }
 .router-link-content{
   width: 100%;
   height: 100%;
+  margin: 0 1px 0 0;
+  padding: 7px 6px;
 
   display: flex;
   align-items: center;
@@ -74,8 +92,3 @@ export default {
 }
 </style>
 
-<style>
-#app-header, #app-header *{
-  background-color: white;
-}
-</style>
