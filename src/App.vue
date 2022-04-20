@@ -2,19 +2,12 @@
   <div id="app">
     <header id="app-header">
       <ul>
-        <li>
-          <router-link tag="li" :to="{ path : '/lp_store'}" class="router-link-content">
-              <label>LP-Store</label>
-          </router-link>
-        </li>
-        <li>
-          <router-link tag="li" :to="{ path : '/bp_store'}" class="router-link-content">
-              <label>BP-Store</label>
-          </router-link>
-        </li>
-        <li>
-          <router-link tag="li" :to="{ path : '/home'}" class="router-link-content">
-            <label>About us</label>
+        <li v-for="(page, idx) in pages" :key="idx">
+          <router-link custom v-slot="{ navigate, isActive}" :to="{ path : page.path}" class="router-link-content">
+            <span @click="navigate"
+                  @keypress.enter="navigate"
+                  :class="[isActive && 'router-link-active']"
+            >{{page.title}}</span>
           </router-link>
         </li>
       </ul>
@@ -28,6 +21,24 @@
 <script>
 export default {
   name: 'App',
+  data(){
+    return{
+      pages : [
+        {
+          path : "/lp_store",
+          title : "LP-Store",
+        },
+        {
+          path : "/bp_store",
+          title : "BP-Store",
+        },
+        {
+          path : "/home",
+          title : "About us",
+        },
+      ]
+    }
+  }
 }
 </script>
 
@@ -77,7 +88,8 @@ export default {
   justify-content: center;
   height: max-content;
 }
-li.router-link-active{
+
+.router-link-active{
   background-color: var(--main-brdr-color-default);
 }
 .router-link-content{
