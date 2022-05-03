@@ -45,6 +45,7 @@ import {LP_Type_Trade} from "../../../model/LP_Offers/Trade.ts";
 
 export default {
   name: "tr-trade-element",
+  inject : ['$format'],
   components: {Item_Amount_Element},
   props : {
     trade : {

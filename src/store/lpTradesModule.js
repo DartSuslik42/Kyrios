@@ -1,5 +1,5 @@
 import axiosESI from "./axiosESI.ts";
-import EVEMarket from "./axiosMarket_Appraisal"
+import EVEMarket from "./axiosMarket_Dummy"
 import {TradeFilter} from "../model/Filter";
 export const lpTradesModule = {
     namespaced : true,
