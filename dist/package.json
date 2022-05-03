@@ -1,0 +1,10 @@
+{
+  "name": "test-vuejs-app",
+  "version": "1.0.0",
+  "description": "Heroku App",
+  "author": "gearmobile",
+  "private": true,
+  "scripts": {
+    "postinstall": "npm install express"
+  }
+}
