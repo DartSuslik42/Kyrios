@@ -1,5 +1,5 @@
-import axiosESI from "./axiosESI.js";
-import axiosEVEMarketer from "./axiosEVEMarketer";
+import axiosESI from "./axiosESI.ts";
+import EVEMarket from "./axiosMarket_Appraisal"
 import {TradeFilter} from "../model/Filter";
 export const lpTradesModule = {
     namespaced : true,
@@ -131,7 +131,7 @@ export const lpTradesModule = {
             })
 
             // Инициализация поля "market_info"
-            const marketInfoArray = await axiosEVEMarketer.getMarketInfoOfArray(type_ids)
+            const marketInfoArray = await EVEMarket.getMarketInfoOfArray(type_ids)
             for(let trade of trades) {
                 trade.market_info = marketInfoArray.find((obj)=>{
                     return obj.type_id === trade.type_id

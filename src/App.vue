@@ -1,14 +1,15 @@
 <template>
-  <div id="app">
+  <div id="app-page">
     <header id="app-header">
       <ul>
         <li v-for="(page, idx) in pages" :key="idx">
-          <router-link custom v-slot="{ navigate, isActive}" :to="{ path : page.path}" class="router-link-content">
-            <span @click="navigate"
-                  @keypress.enter="navigate"
-                  :class="[isActive && 'router-link-active']"
-            >{{page.title}}</span>
-          </router-link>
+            <router-link custom v-slot="{ navigate, isActive}" :to="{ path : page.path}">
+              <span @click="navigate"
+                    @keypress.enter="navigate"
+                    class="router-link-content"
+                    :class="[isActive && 'router-link-active']"
+              >{{page.title}}</span>
+            </router-link>
         </li>
       </ul>
     </header>
@@ -47,8 +48,9 @@ export default {
   display: flex;
   align-self: stretch;
   width: 100%;
+  height: 100%;
 }
-#app{
+#app-page{
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -61,7 +63,6 @@ export default {
   padding: 0;
   height: 100vh;
   width: 100vw;
-  overflow: scroll;
   cursor:  default;
 }
 #app-header{

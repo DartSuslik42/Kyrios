@@ -42,20 +42,28 @@ export default {
   },
   async created() {
     await this.fetchFactionsCorps()
+
+
     //TODO : Ахтунг! Говнокод!
+    //Создаёт watcher для параметров роутера
     this.$watch(
         () => this.$route.params,
-        () => {
+        async () => {
           const route_corpID = Number(this.$route.params.corp_id)
+
+          // Если нет информации о ID корпорации в url
           if(!route_corpID){
             this.corp = null
             return
           }
-          if(this.corp?.id !== route_corpID){
+
+          // Если корпорация не определена или корпорация определена, но информация о ней устарела
+          if(!this.corp || this.corp.id !== route_corpID){
             const faction = this.getCorpFaction(route_corpID)
             const FactionCorp = this.$store.state.npcCorporationsModule.FactionsCorps.find((el)=>{
               return el.Faction.id === faction.id
             })
+
             this.corp = FactionCorp.Corporations.find((el)=>{
               return el.id === route_corpID
             })
@@ -65,11 +73,14 @@ export default {
     )
   },
   watch:{
-    async corp(newVal){
-      if(!!newVal && newVal.id !== Number(this.$route.params.corp_id)){
-        await this.$router.push({path: `/lp_store/${newVal.id}`})
-      }
-      await this.fetchTrades(!newVal ? null : newVal.id)
+    corp:{
+      async handler(newVal){
+        if(newVal && newVal.id !== Number(this.$route.params.corp_id)){
+          await this.$router.push({path: `/lp_store/${newVal.id}`})
+        }
+        await this.fetchTrades(this.corp ? this.corp.id : null)
+      },
+      immediate : true,
     }
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <img :src="dataSrc" @error='error' :alt="''">
+  <img :src="dataSrc" @error='error' :alt="''" @load="loaded">
 </template>
 
 <script>
@@ -40,10 +40,16 @@ export default {
     return{
       dataSrc : null,
       dataVariation : null,
+      isLoading : true,
     }
   },
   methods : {
+    loaded() {
+      this.isLoading = false
+      this.$emit("load", true)
+    },
     setDataSrc() {
+      this.isLoading = true
       switch (this.category) {
         case "alliances" :
         case "corporations" :

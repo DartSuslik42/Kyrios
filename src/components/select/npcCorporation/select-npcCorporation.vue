@@ -1,7 +1,7 @@
 <template>
   <div class="npc-corporation-selector">
     <npc-corporation-selected class="content"
-        :corp="value"
+        :corp="modelValue"
         @click="()=>{this.showTable = true}"
     ></npc-corporation-selected>
     <table class="content-list"
@@ -15,7 +15,7 @@
       <npc-corporations-list
           v-if="selectedFaction"
           :corps="getCorps"
-          :selected="value"
+          :selected="modelValue"
           @selected="corpSelected"
       />
     </table>
@@ -34,7 +34,7 @@ export default {
       required : true
     },
     // v-model value bind for selected corp in corps
-    value :{
+    modelValue :{
       default : null
     }
   },
@@ -45,7 +45,7 @@ export default {
     corpSelected(corp){
       this.selectedCorp = corp
       this.showTable = false
-      this.$emit("input", corp)
+      this.$emit("update:modelValue", corp)
     },
   },
   computed:{
@@ -66,9 +66,9 @@ export default {
     }
   },
   created() {
-    if(this.value){
-      this.selectedCorp = this.value
-      this.selectedFaction = this.getCorpFaction(this.value.id)
+    if(this.modelValue){
+      this.selectedCorp = this.modelValue
+      this.selectedFaction = this.getCorpFaction(this.modelValue.id)
     }
   },
 }

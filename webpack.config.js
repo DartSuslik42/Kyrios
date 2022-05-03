@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack')
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
     mode: 'development',
@@ -67,6 +67,8 @@ module.exports = {
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.vue', '.json'],
         alias: {
+            'vue': '@vue/runtime-dom',
+            'Vue': 'vue/dist/vue.esm-bundler.js',
             'vue$': 'vue/dist/vue.esm.js'
         },
         modules: [

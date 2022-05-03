@@ -1,4 +1,4 @@
-import axiosESI from "./axiosESI.js";
+import axiosESI from "./axiosESI.ts";
 import axiosSDE from "./axiosSDE.js";
 import LocalStorage from "./LocalStorage.js";
 export const npcCorporationsModule = {

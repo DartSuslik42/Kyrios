@@ -41,7 +41,7 @@
 <script>
 import Item_Amount_Element from "./Item_Amount_Element.vue";
 import {mapGetters} from "vuex";
-import {LP_Type_Trade} from "../../../model/Trade";
+import {LP_Type_Trade} from "../../../model/LP_Offers/Trade.ts";
 
 export default {
   name: "tr-trade-element",

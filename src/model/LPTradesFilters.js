@@ -1,5 +1,5 @@
 import {TradeFilter} from "./Filter";
-import {LP_Type_Trade} from "./Trade";
+import {LP_Type_Trade} from "./LP_Offers/Trade.ts";
 
 export const filters = Object.freeze([
     new TradeFilter({

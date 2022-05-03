@@ -1,6 +1,6 @@
 import axios from "axios";
 const qs = require('qs')
-import {MarketInfo, MarketTypeInfo} from "../model/MarketInfo";
+import {MarketInfo, MarketTypeInfo} from "../model/Market/MarketInfo";
 
 const system_id = 30000142
 const max_typeID_amount_per_request = 200
