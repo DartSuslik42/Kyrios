@@ -1,13 +1,14 @@
 import axiosESI from "./axiosESI.ts";
 import EVEMarket from "./axiosMarket_Dummy"
 import {TradeFilter} from "../model/Filter";
+import {PriceMode} from "../model/LP_Offers/PriceMode";
 export const lpTradesModule = {
     namespaced : true,
     state(){
         return{
             trades : [],
             blueprints : [],
-            mode : 'buy',
+            mode : PriceMode.Buy,
             filters : [],
             sortingFunction : null,
             isFetched : false,
@@ -23,7 +24,7 @@ export const lpTradesModule = {
             return trades
         },
         OrderTrades : (state) => (trades) => {
-            if(state.sortingFunction){ return trades.sort(state.sortingFunction) }
+            if(typeof state.sortingFunction === 'function'){ return trades.sort(state.sortingFunction) }
             return trades
         },
         getTrades : (state, getters) => {
@@ -32,7 +33,6 @@ export const lpTradesModule = {
             trades = getters.FilterTrades(trades)
             // Sorting
             trades = getters.OrderTrades(trades)
-
             return trades
         },
         getMode : state => {
@@ -75,7 +75,6 @@ export const lpTradesModule = {
                 console.error(`Expected function. Got ${typeof arg}`)
                 return
             }
-
             state.sortingFunction = arg
         },
         setIsFetched(state, arg){

@@ -1,12 +1,11 @@
 <template>
-  <div class="main"
-      @click.stop="buttonClicked()">
+  <div class="main" @click="buttonClicked()">
     <button type="button" class="arrow"
             :class="{'arrow-notActive' : !this.isActive}"
             :style="{
               transform: `rotate(${this.states[this.stateIndex].options.deg}deg)`,
-              webkitTransform : `rotate(${this.states[this.stateIndex].options.deg}deg)`,
-    }">
+              webkitTransform : `rotate(${this.states[this.stateIndex].options.deg}deg)`,}"
+    >
     </button>
   </div>
 </template>
@@ -28,6 +27,9 @@ export default {
       stateIndex : 0,
     }
   },
+  errorCaptured(error) {
+    console.log(error);
+  },
   methods: {
     buttonClicked(){
       if(this.isActive) {
@@ -36,7 +38,7 @@ export default {
       this.emitClick()
     },
     emitClick() {
-      this.$emit("click", this.states[this.stateIndex].callback)
+      this.$emit("v_click", this.states[this.stateIndex].callback)
     },
     incrementStateIndex(){
       if(this.stateIndex + 1 === this.states.length){
