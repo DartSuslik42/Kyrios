@@ -82,6 +82,7 @@ export default {
 </style>
 <style scoped>
 .content{
+  background-color: inherit;
   position: relative;
   top: 0;
   left: 0;

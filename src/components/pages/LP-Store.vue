@@ -112,7 +112,6 @@ export default {
   position: static;
   top: 0;
   left: 0;
-  background-color: var(--main-bg-color-default);
 }
 .table{
   position: static;

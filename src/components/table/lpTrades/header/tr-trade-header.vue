@@ -33,9 +33,9 @@ export default {
         {title: "Other Cost", class: "col-5", canSort: false},
         {title: "Sell Price per Item", class: "col-6", canSort: true, isActive: false,
           getTradeSortingParam: (trade) =>{ return trade.getSingleItemPrice({mode : this.mode}) } },
-        {title: "Average Volume", class: "col-7", canSort: true, isActive: false,
+        {title: "Average Volume", class: "col-7", canSort: true, isActive: true,
           getTradeSortingParam: (trade) =>{ return trade.getDailyVolume({mode : this.mode}) } },
-        {title: "ISK/LP", class: "col-8", canSort: true, isActive: true,
+        {title: "ISK/LP", class: "col-8", canSort: true, isActive: false,
           getTradeSortingParam : (trade) => {return trade.getISK_per_LP({mode : this.mode})
         } },
       ],

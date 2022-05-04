@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('click', true)">
+  <div @click="$emit('click', true)" class="main">
     <button v-if="corp" class="default text">
       <img-evetech :category="'corporations'" :id="corp.iconID" class="image"/>
       <span>{{corp.name}}</span>
